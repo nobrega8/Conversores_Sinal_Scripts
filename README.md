@@ -8,7 +8,6 @@
 | [Texas Nspire CX II-T](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/tinspirecxiit.py) | ✅ Completa | Nenhum |
 | [Casio FX-CG50](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/casiofxcg50.py) | ✅ Completa | Espaço de ecrã limitado |
 
-
 ## 📝 Visão Geral
 
 Este software fornece um conjunto de ferramentas de cálculo essenciais para análise e projeto de conversores de sinal na unidade curricular "Conversores de Sinal" da FCT Nova. Desenvolvido por **Afonso Nóbrega** para a Texas Nspire CX II-T CAS, o script inclui três calculadoras principais:
@@ -24,6 +23,7 @@ Este software fornece um conjunto de ferramentas de cálculo essenciais para an�
 Permite calcular e visualizar valores de não-linearidade integral (INL) e não-linearidade diferencial (DNL) para um conversor ADC ou DAC.
 
 **Recursos:**
+
 - Entrada flexível para número de bits
 - Cálculo automático de VlsbReal
 - Entrada de dados binários e valores Vout correspondentes
@@ -31,6 +31,7 @@ Permite calcular e visualizar valores de não-linearidade integral (INL) e não-
 - Cálculo de linearidade efetiva em bits
 
 **Fórmulas utilizadas:**
+
 - VlsbReal = (VoutMax - VoutMin)/(2^n - 1)
 - INL = (Vout - n*VlsbR - Vout_min)/VlsbR
 - DNL = (Vout(n) - Vout(n-1))/VlsbR - 1
@@ -41,10 +42,12 @@ Permite calcular e visualizar valores de não-linearidade integral (INL) e não-
 Ferramenta simples para cálculos rápidos entre SNR máximo e número de bits.
 
 **Recursos:**
+
 - Cálculo de SNR max a partir do número de bits
 - Cálculo do número de bits necessário a partir do SNR desejado
 
 **Fórmulas utilizadas:**
+
 - SNR max = 6.02 * n + 1.76 dB
 - n = (SNR max - 1.76) / 6.02
 
@@ -53,12 +56,14 @@ Ferramenta simples para cálculos rápidos entre SNR máximo e número de bits.
 Ferramenta avançada para análise completa de SNR com efeitos de jitter.
 
 **Recursos:**
+
 - Cálculo de SNR considerando ruído de quantização
 - Cálculo de SNR considerando efeitos de jitter
 - Determinação do número de bits necessário para um SNR específico
 - Verificação de limitações impostas pelo jitter
 
 **Fórmulas utilizadas:**
+
 - VinRMS = Vin / √2
 - Vlsb = Vref / 2^n
 - VNQRMS = Vlsb / √12
