@@ -3,7 +3,7 @@
 ## 🔄 Compatibilidade e Problemas Conhecidos
 
 | Modelo de Calculadora | Compatibilidade | Problemas Conhecidos | Ultimo Update |
-|------------------------|-----------------|-----------------------|
+|------------------------|-----------------|-----------------------|-----------------|
 | [Texas Nspire CX II-T CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ✅ Completa | Nenhum | Março 2025 |
 | [Texas Nspire CX II-T](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ✅ Completa | Nenhum | Março 2025 |
 | [Texas Nspire CX CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ⚠️ Limitada | Utiliza TI-Basic | Março 2025 |
