@@ -6,6 +6,7 @@
 |------------------------|-----------------|-----------------------|
 | [Texas Nspire CX II-T CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ✅ Completa | Nenhum |
 | [Texas Nspire CX II-T](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ✅ Completa | Nenhum |
+| [Texas Nspire CX CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ⚠️ Limitada | Utiliza TI-Basic |
 | [Casio FX-CG50](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/casio/casiofxcg50.py) | ✅ Completa | Espaço de ecrã limitado |
 
 ## 📝 Visão Geral
