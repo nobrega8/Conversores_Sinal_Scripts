@@ -14,24 +14,18 @@
 
 ## 📝 Visão Geral
 
-Este software fornece um conjunto de ferramentas de cálculo essenciais para análise e projeto de conversores de sinal na unidade curricular Este software fornece um conjunto de ferramentas de cálculo essenciais para análise e projeto de conversores de sinal na unidade curricular *[Conversores de Sinal](https://guia.unl.pt/pt/2024/fct/program/1068/course/12708)* da [FCT Nova](https://www.fct.unl.pt/).
-
 1. **📈 Calculadora de Tabelas INL/DNL** - Para análise de linearidade diferencial e integral
 2. **🔊 Calculadora SNR max** - Para relações entre SNR e número de bits
 3. **📲 Calculadora SNR** - Para análise completa de ruído incluindo efeitos de jitter
 
 ## 🎓 Uso Académico
 
-Este software foi desenvolvido especificamente para apoiar os estudantes na unidade curricular "Conversores de Sinal" da FCT Nova. Os cálculos e métodos implementados estão alinhados com o conteúdo do curso.
+Este software foi desenvolvido especificamente para apoiar os estudantes na unidade curricular *[Conversores de Sinal](https://guia.unl.pt/pt/2024/fct/program/1068/course/12708)* da [FCT Nova](https://www.fct.unl.pt/). Os cálculos e métodos implementados estão alinhados com o conteúdo do curso.
 
 ## 👨‍💻 Desenvolvedor
 
 Desenvolvido por **Afonso Nóbrega** 
 Copyright © 2025
-
-## 📄 Licença
-
-Este software é fornecido apenas para uso educacional no contexto da unidade curricular *[Conversores de Sinal](https://guia.unl.pt/pt/2024/fct/program/1068/course/12708)* da [FCT Nova](https://www.fct.unl.pt/).
 
 ---
 
