@@ -24,7 +24,8 @@ Este software foi desenvolvido especificamente para apoiar os estudantes na unid
 
 ## 👨‍💻 Desenvolvedor
 
-Desenvolvido por **Afonso Nóbrega** 
+Desenvolvido por **Afonso Nóbrega**  
+
 Copyright © 2025
 
 ---
