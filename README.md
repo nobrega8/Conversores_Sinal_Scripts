@@ -1,6 +1,6 @@
 # 🧮 Calculadora para Conversores de Sinal - FCT Nova 📊
 
-## 🔄 Compatibilidade e Problemas Conhecidos
+## 🔄 Calculadoras Testadas
 
 | Modelo de Calculadora | Compatibilidade | Problemas Conhecidos       | Último Update |
 |------------------------|-----------------|-----------------------------|----------------|
