@@ -1,5 +1,14 @@
 # 🧮 Calculadora para Conversores de Sinal - FCT Nova 📊
 
+## 🔄 Compatibilidade e Problemas Conhecidos
+
+| Modelo de Calculadora | Compatibilidade | Problemas Conhecidos |
+|------------------------|-----------------|-----------------------|
+| [Texas Nspire CX II-T CAS](https://example.com/nspire-cx-ii-t-cas) | ✅ Completa | Nenhum |
+| [Texas Nspire CX II-T](https://example.com/nspire-cx-ii-t) | ✅ Completa | Nenhum |
+| [Casio FX-CG50](https://example.com/fx-cg50) | ✅ Completa | Espaço de ecrã limitado |
+
+
 ## 📝 Visão Geral
 
 Este software fornece um conjunto de ferramentas de cálculo essenciais para análise e projeto de conversores de sinal na unidade curricular "Conversores de Sinal" da FCT Nova. Desenvolvido por **Afonso Nóbrega** para a Texas Nspire CX II-T CAS, o script inclui três calculadoras principais:
@@ -55,14 +64,6 @@ Ferramenta avançada para análise completa de SNR com efeitos de jitter.
 - VNQRMS = Vlsb / √12
 - VJitterRMS = VinRMS * 2π * Fin * Djitter
 - SNR = 10 * log₁₀(VinRMS² / (VNQRMS² + VJitterRMS²))
-
-## 🔄 Compatibilidade e Problemas Conhecidos
-
-| Modelo de Calculadora | Compatibilidade | Problemas Conhecidos |
-|----------------------|-----------------|---------------------|
-| Texas Nspire CX II-T CAS | ✅ Completa | Nenhum |
-| Texas Nspire CX II-T | ✅ Completa | Nenhum |
-| Casio FX-CG50 | ✅ Completa | Espaço de ecrã limitado |
 
 ## 🎓 Uso Académico
 
