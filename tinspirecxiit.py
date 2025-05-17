@@ -184,6 +184,7 @@ def inl_dnl_calculator():
 def snr_max_calculator():
     """Calculadora SNR max"""
     print("\nSNR max calculator")
+    print("\nBipolar->Vref*2")
     print("==================")
     print("Resolver para: ")
     print("1. SNR max")
@@ -209,6 +210,7 @@ def snr_max_calculator():
 def snr_calculator():
     """Calculadora SNR que pode resolver para diferentes variáveis"""
     print("\nSNR Calculator")
+    print("\nBipolar->Vref*2")
     print("===============")
     
     # Pergunta ao usuário qual variável resolver
