@@ -2,12 +2,15 @@
 
 ## 🔄 Compatibilidade e Problemas Conhecidos
 
-| Modelo de Calculadora | Compatibilidade | Problemas Conhecidos | Ultimo Update |
-|------------------------|-----------------|-----------------------|-----------------|
-| [Texas Nspire CX II-T CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ✅ Completa | Nenhum | Março 2025 |
-| [Texas Nspire CX II-T](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ✅ Completa | Nenhum | Março 2025 |
-| [Texas Nspire CX CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ⚠️ Limitada | Utiliza TI-Basic | Março 2025 |
-| [Casio FX-CG50](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/casio/casiofxcg50.py) | ✅ Completa | Espaço de ecrã limitado | Março 2025 |
+| Modelo de Calculadora | Compatibilidade | Problemas Conhecidos       | Último Update |
+|------------------------|-----------------|-----------------------------|----------------|
+| **Texas Nspire CX Series** ||||
+| [CX II-T CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ✅ Completa | Nenhum                  | Março 2025     |
+| [CX II-T](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py)     | ✅ Completa | Nenhum                  | Março 2025     |
+| [CX CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py)      | ⚠️ Limitada | Utiliza TI-Basic        | Março 2025     |
+| **Casio FX Series** ||||
+| [FX-CG50](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/casio/casiofxcg50.py)       | ✅ Completa | Espaço de ecrã limitado | Março 2025     |
+
 
 ## 📝 Visão Geral
 
