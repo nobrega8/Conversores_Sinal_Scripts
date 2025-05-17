@@ -14,7 +14,7 @@
 
 ## 📝 Visão Geral
 
-Este software fornece um conjunto de ferramentas de cálculo essenciais para análise e projeto de conversores de sinal na unidade curricular "Conversores de Sinal" da FCT Nova. Desenvolvido por **Afonso Nóbrega** para a Texas Nspire CX II-T CAS, o script inclui três calculadoras principais:
+Este software fornece um conjunto de ferramentas de cálculo essenciais para análise e projeto de conversores de sinal na unidade curricular Este software fornece um conjunto de ferramentas de cálculo essenciais para análise e projeto de conversores de sinal na unidade curricular *[Conversores de Sinal](https://guia.unl.pt/pt/2024/fct/program/1068/course/12708)* da [FCT Nova](https://www.fct.unl.pt/).
 
 1. **📈 Calculadora de Tabelas INL/DNL** - Para análise de linearidade diferencial e integral
 2. **🔊 Calculadora SNR max** - Para relações entre SNR e número de bits
@@ -31,7 +31,7 @@ Copyright © 2025
 
 ## 📄 Licença
 
-Este software é fornecido apenas para uso educacional no contexto da unidade curricular "Conversores de Sinal" da FCT Nova.
+Este software é fornecido apenas para uso educacional no contexto da unidade curricular *[Conversores de Sinal](https://guia.unl.pt/pt/2024/fct/program/1068/course/12708)* da [FCT Nova](https://www.fct.unl.pt/).
 
 ---
 
