@@ -4,9 +4,9 @@
 
 | Modelo de Calculadora | Compatibilidade | Problemas Conhecidos |
 |------------------------|-----------------|-----------------------|
-| [Texas Nspire CX II-T CAS]([https://example.com/nspire-cx-ii-t-cas](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/tinspirecxiit.py)) | ✅ Completa | Nenhum |
-| [Texas Nspire CX II-T]([https://example.com/nspire-cx-ii-t](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/tinspirecxiit.py)) | ✅ Completa | Nenhum |
-| [Casio FX-CG50]([https://example.com/fx-cg50](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/casiofxcg50.py)) | ✅ Completa | Espaço de ecrã limitado |
+| [Texas Nspire CX II-T CAS](ttps://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/tinspirecxiit.py) | ✅ Completa | Nenhum |
+| [Texas Nspire CX II-T](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/tinspirecxiit.py) | ✅ Completa | Nenhum |
+| [Casio FX-CG50](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/casiofxcg50.py) | ✅ Completa | Espaço de ecrã limitado |
 
 
 ## 📝 Visão Geral
