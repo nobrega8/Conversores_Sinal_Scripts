@@ -31,8 +31,9 @@ Este software foi desenvolvido especificamente para apoiar os estudantes na unid
 
 ## 👨‍💻 Desenvolvedor
 
-Desenvolvido por **Afonso Nóbrega**  
-
+Desenvolvido por:
+- **Afonso Nóbrega**
+- **João Pedro Antunes** (Ti-Basic)
 Copyright © 2025
 
 ---
