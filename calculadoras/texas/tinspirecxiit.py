@@ -3,6 +3,8 @@
 # Para Texas Nspire CX II-T CAS
 
 from math import *
+from ti_plotlib import *
+from ti_system import *
 
 def binary_to_decimal(binary_bits):
     """Converte string binária para valor decimal"""
@@ -309,7 +311,48 @@ def snr_calculator():
     
     else:
         print("Invalid choice. Please run the program again.")
+        
+def dout_step_graph():
+    print("\nDout Step Table")
+    print("================")
 
+    n = int(input("Número de bits (n): "))
+    Vref = float(input("Vref (V): "))
+
+    print("\nEscolhe o modo:")
+    print("1 - Simétrico (Vin ∈ [-Vref/2, +Vref/2], Dout ∈ [0, 2^n])")
+    print("2 - Clássico  (Vin ∈ [0, Vref], Dout ∈ [0, 2^n - 1])")
+    modo = input("Modo [1/2]: ")
+
+    Vlsb = Vref / (2 ** n)
+
+    if modo == "1":
+        Vin_min = -Vref / 2
+        Vin_max = +Vref / 2
+        Dout_max = 2 ** n
+    else:
+        Vin_min = 0
+        Vin_max = Vref
+        Dout_max = 2 ** n - 1
+
+    total_pontos = 2 * (2 ** n)
+    step_size = (Vin_max - Vin_min) / (total_pontos - 1)
+
+    print("\n{:>6} | {:>6}".format("Vin", "Dout"))
+    print("-" * 15)
+
+    for i in range(total_pontos):
+        Vin = Vin_min + i * step_size
+
+        if modo == "1":
+            Dout = round(Vin / Vlsb) + 2**(n - 1)
+            Dout = max(0, min(Dout, 2**n))  # saturação
+        else:
+            Dout = floor(Vin / Vlsb)
+            Dout = max(0, min(Dout, 2**n - 1))  # saturação
+
+        print("{:6.3f} | {:6}".format(Vin, Dout))
+            
 def main():
     """Função de menu principal"""
     while True:
@@ -320,6 +363,7 @@ def main():
         print("1. INL/DNL Table Calculator")
         print("2. SNRMax Calculator")
         print("3. SNR Calculator")
+        print("4. Dout Step Graph")
         print("0. Exit")
         print("----------------------------------")
         
@@ -335,6 +379,8 @@ def main():
                 snr_max_calculator()
             elif choice == 3:
                 snr_calculator()
+            elif choice == 4:
+                dout_step_graph()
             else:
                 print("Invalid option. Please try again.")
         except ValueError:

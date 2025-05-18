@@ -327,7 +327,7 @@ def dount_step_graph():
             Dout = round(Vin / Vlsb) + 2**(n - 1)
             Dout = max(0, min(Dout, 2**n))  # saturação
         else:
-            Dout = math.floor(Vin / Vlsb)
+            Dout = round(Vin / Vlsb)
             Dout = max(0, min(Dout, 2**n - 1))  # saturação
 
         Vin_values.append(Vin)
