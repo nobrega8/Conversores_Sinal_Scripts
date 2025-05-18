@@ -2,6 +2,7 @@
 # Copyright © 2025 Barraca Familia Software
 # Para Texas Nspire CX II-T CAS
 
+import matplotlib.pyplot as plt
 from math import *
 
 def binary_to_decimal(binary_bits):
@@ -293,6 +294,55 @@ def snr_calculator():
     
     else:
         print("Invalid choice. Please run the program again.")
+        
+def dount_step_graph():
+    print("\nDout Step Graph")
+    print("================")
+
+    n = int(input("Número de bits (n): "))
+    Vref = float(input("Vref (V): "))
+
+    print("\nEscolhe o modo:")
+    print("1 - Simétrico (Vin ∈ [-Vref/2, +Vref/2], Dout ∈ [0, 2^n])")
+    print("2 - Clássico  (Vin ∈ [0, Vref], Dout ∈ [0, 2^n - 1])")
+    modo = input("Modo [1/2]: ").strip()
+
+    Vlsb = Vref / (2 ** n)
+
+    if modo == "1":
+        Vin_min = -Vref / 2
+        Vin_max = +Vref / 2
+    else:
+        Vin_min = 0
+        Vin_max = Vref
+
+    num_points = 1000
+    Vin_values = []
+    Dout_values = []
+
+    for i in range(num_points + 1):
+        Vin = Vin_min + (Vin_max - Vin_min) * i / num_points
+
+        if modo == "1":
+            Dout = round(Vin / Vlsb) + 2**(n - 1)
+            Dout = max(0, min(Dout, 2**n))  # saturação
+        else:
+            Dout = math.floor(Vin / Vlsb)
+            Dout = max(0, min(Dout, 2**n - 1))  # saturação
+
+        Vin_values.append(Vin)
+        Dout_values.append(Dout)
+
+    # Gráfico
+    plt.figure(figsize=(8, 4))
+    titulo = "Simétrico (centrado em 0)" if modo == "1" else "Clássico (0 a Vref)"
+    plt.step(Vin_values, Dout_values, where='post')
+    plt.title(f'Dout vs Vin ({n} bits) - {titulo}')
+    plt.xlabel('Vin (V)')
+    plt.ylabel('Dout')
+    plt.grid(True)
+    plt.axvline(0, color='gray', linestyle='--', linewidth=0.8)
+    plt.show()
 
 def main():
     """Função de menu principal"""
@@ -304,11 +354,12 @@ def main():
         print("1. INL/DNL Table Calculator")
         print("2. SNRMax Calculator")
         print("3. SNR Calculator")
+        print("4. Dout Step Graph")
         print("0. Exit")
         print("----------------------------------")
         
         try:
-            choice = int(input("Enter your choice (0-3): "))
+            choice = int(input("Enter your choice (0-4): "))
             
             if choice == 0:
                 print("Exiting program. Obrigado e volte sempre!")
@@ -319,6 +370,8 @@ def main():
                 snr_max_calculator()
             elif choice == 3:
                 snr_calculator()
+            elif choice == 4:
+                dount_step_graph()
             else:
                 print("Invalid option. Please try again.")
         except ValueError:
