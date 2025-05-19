@@ -6,17 +6,45 @@ import matplotlib.pyplot as plt
 from math import *
 
 def binary_to_decimal(binary_bits):
-    """Converte string binária para valor decimal"""
+    """Converte uma string binária em decimal.
+
+    Args:
+        binary_bits (_type_): valor binário a converter
+
+    Returns:
+        _type_: valor decimal
+    """
     return int(binary_bits, 2)
 
 def calculate_vlsbr(vout_min, vout_max, num_bits):
-    """Calcula VlsbReal usando fórmula: (VoutMax - VoutMin)/(2^n - 1)"""
+    """Calcula VlsbReal usando fórmula: (VoutMax - VoutMin)/(2^n - 1)
+    
+    Args:
+        vout_min (_type_): valor mínimo de Vout
+        vout_max (_type_): valor máximo de Vout
+        num_bits (_type_): número de bits
+        
+    Returns:
+        _type_: valor de VlsbReal
+    """
     try:
         return (vout_max - vout_min)/(2**num_bits - 1)
     except:
         return 0
 
 def calculate_inl(vout, decimal_value, vlsbr, vout_min):
+    """Calcula INL usando fórmula: INL = (Vout - n*VlsbR - Vout_min)/VlsbR
+    
+    Args:
+        vout (_type_): valor de Vout
+        decimal_value (_type_): valor decimal correspondente aos bits
+        vlsbr (_type_): valor de VlsbReal
+        vout_min (_type_): valor mínimo de Vout
+        
+    Returns:
+        _type_: valor de INL
+        bool: True se o cálculo foi bem-sucedido, False caso contrário
+    """
     try:
         # Aplica fórmula INL: INL = (Vout - n*VlsbR - Vout_min)/VlsbR 
         inl = (vout - decimal_value*vlsbr - vout_min)/vlsbr 
