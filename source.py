@@ -420,7 +420,7 @@ def integration_time_calculator():
     Returns:
         None
     """
-    print("\nIntegration Time Calculator")
+    print("\nClock Frequency Calculator")
     print("===========================")
     print("1 - Solve for n bits")
     print("2 - Solve for f")
@@ -434,7 +434,11 @@ def integration_time_calculator():
     elif choice == 2:
         # Resolve para freq 
         n = float(input("Enter n bits: "))
-        pf = float(input("Enter power frequency (Hz): "))
+        try:
+            pf = float(input("Enter power frequency (Default: 50 Hz): "))
+        except:
+            print("Invalid input. Using default of 50 Hz.")
+            pf = 50
         q = 2**n
         t = 1 / pf
         f = (q / t)/1e6
@@ -458,7 +462,7 @@ def main():
         print("2. SNRMax Calculator")
         print("3. SNR Calculator")
         print("4. Dout Step Graph")
-        print("5. Integration Time Calculator")
+        print("5. Clock Frequency Calculator")
         print("0. Exit")
         print("----------------------------------")
         
