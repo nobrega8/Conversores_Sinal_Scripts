@@ -1,6 +1,4 @@
 from math import *
-from ti_plotlib import *
-from ti_system import *
 
 def binary_to_decimal(binary_bits):
     return int(binary_bits, 2)
