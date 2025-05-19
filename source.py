@@ -57,12 +57,12 @@ def calculate_dnl(vout, prev_vout, vlsbr):
     """Calcula DNL usando fórmula: DNL = (Vout(n) - Vout(n-1))/VlsbR - 1
 
     Args:
-        vout (_type_): valor de Vout atual
-        prev_vout (_type_): valor de Vout anterior
-        vlsbr (_type_): valor de VlsbReal
+        vout (float): valor de Vout atual
+        prev_vout (float): valor de Vout anterior
+        vlsbr (float): valor de VlsbReal
 
     Returns:
-        _type_: valor de DNL
+        float: valor de DNL
     """
     
     try:
@@ -73,7 +73,14 @@ def calculate_dnl(vout, prev_vout, vlsbr):
         return 0, False
 
 def calculate_linearity(num_bits, inl_values):
-    """Calcula linearidade usando fórmula: nbits-log_2(INLmax-INLmin)"""
+    """Calcula linearidade usando fórmula: nbits-log_2(INLmax-INLmin)
+    
+    Args:
+        num_bits (int): número de bits
+        inl_values (list): lista de valores INL
+    Returns:
+        float: valor de linearidade
+    """
     try:
         # Filtra valores INL não numéricos
         numeric_inl = []
@@ -101,7 +108,13 @@ def calculate_linearity(num_bits, inl_values):
         return "N/A"
 
 def inl_dnl_calculator():
-    """Executa a Calculadora de Tabela INL/DNL"""
+    """Executa a Calculadora de Tabela INL/DNL
+    
+    Args:
+        None
+    Returns:
+        None    
+    """
     print("INL/DNL Table Calculator")
     print("-----------------------------")
     
@@ -223,7 +236,12 @@ def inl_dnl_calculator():
     print("\nTable calculation complete.\nObrigado pela ajuda Nobrega!")
 
 def snr_max_calculator():
-    """Calculadora SNR max"""
+    """Calculadora SNR max
+    Args:
+        None
+    Returns:
+        None
+    """
     print("\nSNR max calculator")
     print("==================")
     
@@ -234,7 +252,12 @@ def snr_max_calculator():
     print("Obrigado pela ajuda Nobrega!")
     
 def snr_calculator():
-    """Calculadora SNR que pode resolver para diferentes variáveis"""
+    """Calculadora SNR que pode resolver para diferentes variáveis
+    Args:
+        None
+    Returns:
+        None
+    """
     print("\nSNR Calculator")
     print("===============")
     
@@ -336,6 +359,12 @@ def snr_calculator():
         print("Invalid choice. Please run the program again.")
         
 def dount_step_graph():
+    """Calculadora de gráfico de passos Dout
+    Args:
+        None
+    Returns:
+        None
+    """
     print("\nDout Step Graph")
     print("================")
 
@@ -385,7 +414,12 @@ def dount_step_graph():
     plt.show()
 
 def main():
-    """Função de menu principal"""
+    """Função de menu principal
+    Args:
+        None
+    Returns:
+        None
+    """
     while True:
         print("\n===================================")
         print("      CONVERSORES DE SINAL")
