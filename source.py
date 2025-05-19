@@ -10,10 +10,10 @@ def binary_to_decimal(binary_bits):
     """Converte uma string binária em decimal.
 
     Args:
-        binary_bits (_type_): valor binário a converter
+        binary_bits (string): valor binário a converter
 
     Returns:
-        _type_: valor decimal
+        string: valor decimal
     """
     return int(binary_bits, 2)
 
@@ -21,12 +21,12 @@ def calculate_vlsbr(vout_min, vout_max, num_bits):
     """Calcula VlsbReal usando fórmula: (VoutMax - VoutMin)/(2^n - 1)
     
     Args:
-        vout_min (_type_): valor mínimo de Vout
-        vout_max (_type_): valor máximo de Vout
-        num_bits (_type_): número de bits
+        vout_min (float): valor mínimo de Vout
+        vout_max (float): valor máximo de Vout
+        num_bits (int): número de bits
         
     Returns:
-        _type_: valor de VlsbReal
+        float: valor de VlsbReal
     """
     try:
         return (vout_max - vout_min)/(2**num_bits - 1)
@@ -37,13 +37,13 @@ def calculate_inl(vout, decimal_value, vlsbr, vout_min):
     """Calcula INL usando fórmula: INL = (Vout - n*VlsbR - Vout_min)/VlsbR
     
     Args:
-        vout (_type_): valor de Vout
-        decimal_value (_type_): valor decimal correspondente aos bits
-        vlsbr (_type_): valor de VlsbReal
-        vout_min (_type_): valor mínimo de Vout
+        vout (float): valor de Vout
+        decimal_value (float): valor decimal correspondente aos bits
+        vlsbr (float): valor de VlsbReal
+        vout_min (float): valor mínimo de Vout
         
     Returns:
-        _type_: valor de INL
+        float: valor de INL
         bool: True se o cálculo foi bem-sucedido, False caso contrário
     """
     try:
@@ -54,6 +54,17 @@ def calculate_inl(vout, decimal_value, vlsbr, vout_min):
         return 0, False
 
 def calculate_dnl(vout, prev_vout, vlsbr):
+    """Calcula DNL usando fórmula: DNL = (Vout(n) - Vout(n-1))/VlsbR - 1
+
+    Args:
+        vout (_type_): valor de Vout atual
+        prev_vout (_type_): valor de Vout anterior
+        vlsbr (_type_): valor de VlsbReal
+
+    Returns:
+        _type_: valor de DNL
+    """
+    
     try:
         # DNL = (Vout(n) - Vout(n-1))/VlsbR - 1
         dnl = (vout - prev_vout)/vlsbr - 1
