@@ -503,6 +503,35 @@ def calculate_vlsb():
         print("\nCalculated Real Vlsb = " + str(round(vlsb_real, 3)))
     else:
         print("Invalid choice. Please run the program again.")
+        
+def pipeline_dout():
+    num_estagios = int(input("Número de estágios do pipeline: "))
+    bits_por_estagio = int(input("Número de bits por estágio (ex: 2): "))
+
+    if bits_por_estagio < 1:
+        print("Erro: precisa de pelo menos 1 bit por estágio.")
+        return
+
+    douts = []
+    print("\nInsere os dout de cada estágio (binário com", bits_por_estagio, "bits):")
+    for i in range(num_estagios):
+        while True:
+            dout = input(f"  Dout do estágio {i + 1}: ").strip()
+            if len(dout) == bits_por_estagio and all(c in '01' for c in dout):
+                douts.append(dout)
+                break
+            else:
+                print("    Erro: insere um valor binário correto.")
+
+    # Começa com todos os bits do primeiro estágio
+    bits_finais = douts[0]
+
+    # De cada estágio seguinte, usa só o primeiro bit
+    for i in range(1, num_estagios):
+        bits_finais += douts[i][0]
+
+    print("\nDout final (concatenado):", bits_finais)
+    print("Dout final (decimal):", int(bits_finais, 2))
 
 def main():
     """Função de menu principal
@@ -524,11 +553,12 @@ def main():
         print("4. Dout Step Graph")
         print("5. Clock Frequency Calculator")
         print("6. Vlsb Calculator")
+        print("7. Pipeline Dout")
         print("0. Exit")
         print("----------------------------------")
         
         try:
-            choice = int(input("Enter your choice (0-6): "))
+            choice = int(input("Enter your choice (0-7): "))
             
             if choice == 0:
                 print("Exiting program. Obrigado e volte sempre!")
@@ -545,10 +575,12 @@ def main():
                 clock_freq_calculator()
             elif choice == 6:
                 calculate_vlsb()
+            elif choice == 7:
+                pipeline_dout()
             else:
                 print("Invalid option. Please try again.")
         except ValueError:
-            print("Please enter a valid option (0-6).")
+            print("Please enter a valid option (0-7).")
         
         input("\nPress Enter to return to main menu...")
 
