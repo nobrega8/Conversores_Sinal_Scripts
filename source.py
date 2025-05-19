@@ -38,12 +38,16 @@ def calculate_inl(vout, decimal_value, vlsbr, vout_min):
     
     Args:
         vout (float): valor de Vout
+        
         decimal_value (float): valor decimal correspondente aos bits
+        
         vlsbr (float): valor de VlsbReal
+        
         vout_min (float): valor mínimo de Vout
         
     Returns:
         float: valor de INL
+        
         bool: True se o cálculo foi bem-sucedido, False caso contrário
     """
     try:
@@ -58,7 +62,9 @@ def calculate_dnl(vout, prev_vout, vlsbr):
 
     Args:
         vout (float): valor de Vout atual
+        
         prev_vout (float): valor de Vout anterior
+        
         vlsbr (float): valor de VlsbReal
 
     Returns:
@@ -77,7 +83,9 @@ def calculate_linearity(num_bits, inl_values):
     
     Args:
         num_bits (int): número de bits
+        
         inl_values (list): lista de valores INL
+        
     Returns:
         float: valor de linearidade
     """
@@ -112,6 +120,7 @@ def inl_dnl_calculator():
     
     Args:
         None
+        
     Returns:
         None    
     """
@@ -360,8 +369,10 @@ def snr_calculator():
         
 def dount_step_graph():
     """Calculadora de gráfico de passos Dout
+    
     Args:
         None
+        
     Returns:
         None
     """
@@ -413,10 +424,12 @@ def dount_step_graph():
     plt.axvline(0, color='gray', linestyle='--', linewidth=0.8)
     plt.show()
     
-def integration_time_calculator():
-    """Calculadora de tempo de integração
+def clock_freq_calculator():
+    """Calculadora da frquência de clock
+    
     Args:
         None
+        
     Returns:
         None
     """
@@ -428,7 +441,11 @@ def integration_time_calculator():
     if choice == 1:
         # Resolve para n bits
         f = float(input("Enter f (MHz): "))
-        pf = float(input("Enter power frequency (Hz): "))
+        try:
+            pf = float(input("Enter power frequency (Default: 50 Hz): "))
+        except:
+            print("Invalid input. Using default of 50 Hz.")
+            pf = 50
         n = ceil(log2(f * 1e6 / pf))
         print(f"Calculated n = {n} bits")
     elif choice == 2:
@@ -448,8 +465,10 @@ def integration_time_calculator():
 
 def main():
     """Função de menu principal
+    
     Args:
         None
+        
     Returns:
         None
     """
@@ -481,7 +500,7 @@ def main():
             elif choice == 4:
                 dount_step_graph()
             elif choice == 5:
-                integration_time_calculator()
+                clock_freq_calculator()
             else:
                 print("Invalid option. Please try again.")
         except ValueError:

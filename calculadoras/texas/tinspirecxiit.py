@@ -300,7 +300,28 @@ def dout_step_graph():
             Dout = max(0, min(Dout, 2**n - 1))  
 
         print("{:6.3f} | {:6}".format(Vin, Dout))
-            
+        
+def clock_freq_calculator():
+    print("\nClock Frequency Calculator")
+    print("==============================")
+    print("1 - Solve for n bits")
+    print("2 - Solve for f")
+    choice = int(input("Choose (1-2): "))
+    if choice == 1:
+        f = float(input("Enter f (MHz): "))
+        pf = float(input("Enter power f (Hz (default=50)): "))
+        n = ceil(log2(f*1e6 / pf))
+        print(f"n bits = {n} bits")
+    elif choice == 2:
+        n = int(input("Enter n bits: "))
+        pf = float(input("Enter power f (Hz (default=50)): "))
+        q = 2**n
+        t = 1 / pf
+        f = (q/t) / 1e6
+        print(f"f = {f} MHz")
+    else:
+        print("Invalid option. Please try again.")
+               
 def main():
     while True:
         print("\n===================================")
@@ -311,11 +332,12 @@ def main():
         print("2. SNRMax Calculator")
         print("3. SNR Calculator")
         print("4. Dout Step Graph")
+        print("5. Clock Frequency Calculator")
         print("0. Exit")
         print("----------------------------------")
         
         try:
-            choice = int(input("Enter your choice (0-3): "))
+            choice = int(input("Enter your choice (0-5): "))
             
             if choice == 0:
                 print("Exiting program. Obrigado e volte sempre!")
@@ -328,10 +350,12 @@ def main():
                 snr_calculator()
             elif choice == 4:
                 dout_step_graph()
+            elif choice == 5:
+                clock_freq_calculator()
             else:
                 print("Invalid option. Please try again.")
         except ValueError:
-            print("Please enter a valid option (0-3).")
+            print("Please enter a valid option (0-5).")
         
         input("\nPress Enter to return to main menu...")
 
