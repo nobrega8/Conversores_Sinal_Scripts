@@ -1,5 +1,5 @@
 # Calculadora para Conversores de Sinal - FCT Nova
-# Copyright © 2025 Afonso Nobrega
+# Copyright © 2025 Afonso Nóbrega
 # **source code**
 # - versões especificas de cada calculadora estão em ./calculadoras/<marca>/<modelo>.py
 
