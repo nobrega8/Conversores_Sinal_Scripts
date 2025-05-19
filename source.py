@@ -32,6 +32,21 @@ def calculate_vlsbr(vout_min, vout_max, num_bits):
         return (vout_max - vout_min)/(2**num_bits - 1)
     except:
         return 0
+    
+def calculate_vlsbi(vref, num_bits):
+    """Calcula VlsbIdeal usando fórmula: Vref/(2^n)
+    
+    Args:
+        vref (float): valor de Vref
+        num_bits (int): número de bits
+        
+    Returns:
+        float: valor de VlsbIdeal
+    """
+    try:
+        return vref/(2**num_bits)
+    except:
+        return 0
 
 def calculate_inl(vout, decimal_value, vlsbr, vout_min):
     """Calcula INL usando fórmula: INL = (Vout - n*VlsbR - Vout_min)/VlsbR
@@ -462,6 +477,34 @@ def clock_freq_calculator():
         print(f"Calculated f = {f} MHz")
     else:
         print("Invalid choice. Please run the program again.")
+        
+def calculate_vlsb():
+    """ Calcula Vlsb
+    
+    Args:
+        None
+        
+    Returns:
+        None
+    """
+    print("\nIdeal Vlsb Calculator")
+    print("======================")
+    print("1 - Ideal")
+    print("2 - Real")
+    choice = int(input("Enter your choice (1 or 2): "))
+    if choice == 1:
+        num_bits = int(input("Enter number of bits (n): "))
+        vref = float(input("Enter Vref value (V): "))
+        vlsb_ideal = calculate_vlsbi(vref, num_bits)
+        print("\nCalculated Ideal Vlsb = " + str(round(vlsb_ideal, 3)))
+    elif choice == 2:
+        vout_min = float(input("Enter Vout_min value: "))
+        vout_max = float(input("Enter Vout_max value: "))
+        num_bits = int(input("Enter number of bits (n): "))
+        vlsb_real = calculate_vlsbr(vout_min, vout_max, num_bits)
+        print("\nCalculated Real Vlsb = " + str(round(vlsb_real, 3)))
+    else:
+        print("Invalid choice. Please run the program again.")
 
 def main():
     """Função de menu principal
@@ -482,6 +525,7 @@ def main():
         print("3. SNR Calculator")
         print("4. Dout Step Graph")
         print("5. Clock Frequency Calculator")
+        print("6. Vlsb Calculator")
         print("0. Exit")
         print("----------------------------------")
         
