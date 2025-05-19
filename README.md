@@ -16,15 +16,18 @@
 
 ## 📝 Visão Geral
 
-### Março 2025
+### v1.0.0
 
 1. **📈 Calculadora de Tabelas INL/DNL** - Para análise de linearidade diferencial e integral
 2. **🔊 Calculadora SNR max** - Para relações entre SNR e número de bits
 3. **📲 Calculadora SNR** - Para análise completa de ruído incluindo efeitos de jitter
 
-### Maio 2025
+### v2.1.0
 
 4. **📊 Dout Graph** - Permite visualizar graficamente a saída digital
+
+### v2.2.0
+
 5. **🕒 Clock Frequency** -  Calcular o Clock Frequency a partir dos numero de bits
 
 ## 🎓 Uso Académico
