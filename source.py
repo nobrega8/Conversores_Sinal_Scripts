@@ -1,6 +1,7 @@
-# INL e DNL Calculator
-# Copyright © 2025 Barraca Familia Software
-# Para Texas Nspire CX II-T CAS
+# Calculadora para Conversores de Sinal - FCT Nova
+# Copyright © 2025 Afonso Nobrega
+# **source code**
+# - versões especificas de cada calculadora estão em ./calculadoras/<marca>/<modelo>.py
 
 import matplotlib.pyplot as plt
 from math import *
