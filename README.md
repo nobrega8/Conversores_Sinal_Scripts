@@ -24,6 +24,7 @@
 ### Maio 2025
 
 4. **📊 Dout Graph** - Permite visualizar graficamente a saída digital
+5. **🕒 Clock Frequency** -  Calcular o Clock Frequency a partir dos numero de bits
 
 ## 🎓 Uso Académico
 
@@ -32,6 +33,7 @@ Este software foi desenvolvido especificamente para apoiar os estudantes na unid
 ## 👨‍💻 Desenvolvedor
 
 Desenvolvido por:
+
 - **Afonso Nóbrega**
 - **João Pedro Antunes** (Ti-Basic)
   
