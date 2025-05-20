@@ -1,7 +1,7 @@
 ## Texas Instruments
 ## Nspire CX II T
 ## 2025 (c) Afonso Nóbrega
-##v2.6.0
+##v2.6.1
 
 from math import *
 
@@ -514,7 +514,7 @@ def main():
                 print("3. Pipeline Dout")
                 pipeline_choice = int(input("Enter your choice (1-3): "))
                 if pipeline_choice == 1:
-                    dount_step_graph()
+                    dout_step_graph()
                 elif pipeline_choice == 2:
                     pipeline_snr()
                 elif pipeline_choice == 3:
