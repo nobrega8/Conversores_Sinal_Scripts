@@ -4,7 +4,7 @@
 
 | Modelo de Calculadora | Compatibilidade | Problemas Conhecidos       | Último Update |
 |------------------------|-----------------|-----------------------------|----------------|
-| **Source** | -- | -- | v2.4.0 |
+| **Source** | -- | -- | v2.5.1 |
 | **Texas Nspire CX Series** ||||
 | [CX II-T CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py) | ✅ Completa | Nenhum                  | v2.2.0     |
 | [CX II-T](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py)     | ✅ Completa | Nenhum                  | v2.2.0     |
@@ -29,9 +29,10 @@
 
 5. **🕒 Clock Frequency** -  Calcular o Clock Frequency a partir dos numero de bits
 
-### v2.4.0
+### v2.5.0
 
 6. **Real and Ideal VLSB** - Calcular o VLSB real e ideal
+7. **Pipeline Dout** - Calculo do Dout tendo em conta os stages e os bits redundantes
 
 ## 🎓 Uso Académico
 
