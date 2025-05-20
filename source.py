@@ -502,7 +502,7 @@ def calculate_vlsb():
     Returns:
         None
     """
-    print("\nIdeal Vlsb Calculator")
+    print("\nVlsb Calculator")
     print("======================")
     print("1 - Ideal")
     print("2 - Real")
