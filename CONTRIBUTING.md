@@ -58,4 +58,4 @@ Se tiveres dúvidas, sugestões ou ideias para funcionalidades novas, podes abri
 
 ---
 
-**Juntos conseguimos tornar esta ferramenta mais completa e útil para todos!** 🙌  
+**Ganda drena** 🙌  
