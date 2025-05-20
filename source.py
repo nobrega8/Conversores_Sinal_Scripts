@@ -17,6 +17,23 @@ def binary_to_decimal(binary_bits):
     """
     return int(binary_bits, 2)
 
+def bin_to_val(bin_str, vref, bits):
+        """Converte binário para valor de tensão DAC"""
+        nivel = int(bin_str, 2)
+        max_nivel = 2**bits - 1
+        passo = vref / (2**bits)
+        return -vref/2 + nivel * passo
+    
+def val_to_bin(val, vref, bits):
+    """Converte um valor analógico para binário"""
+    steps = 2**bits
+    delta = vref / steps
+    code = int((val + vref/2) / delta)
+    # Limita o código entre 0 e 2^bits-1
+    code = max(0, min(code, steps - 1))
+    # Converte para binário e remove o '0b' do início
+    return format(code, f'0{bits}b')
+
 def calculate_vlsbr(vout_min, vout_max, num_bits):
     """Calcula VlsbReal usando fórmula: (VoutMax - VoutMin)/(2^n - 1)
     
@@ -30,6 +47,21 @@ def calculate_vlsbr(vout_min, vout_max, num_bits):
     """
     try:
         return (vout_max - vout_min)/(2**num_bits - 1)
+    except:
+        return 0
+    
+def calculate_vlsbi(vref, num_bits):
+    """Calcula VlsbIdeal usando fórmula: Vref/(2^n)
+    
+    Args:
+        vref (float): valor de Vref
+        num_bits (int): número de bits
+        
+    Returns:
+        float: valor de VlsbIdeal
+    """
+    try:
+        return vref/(2**num_bits)
     except:
         return 0
 
@@ -383,12 +415,11 @@ def dount_step_graph():
     Vref = float(input("Vref (V): "))
 
     print("\nEscolhe o modo:")
-    print("1 - Simétrico (Vin ∈ [-Vref/2, +Vref/2], Dout ∈ [0, 2^n])")
+    print("1 - Simétrico (Vin ∈ [-Vref/2, +Vref/2], Dout ∈ [0, 2^n - 1])")
     print("2 - Clássico  (Vin ∈ [0, Vref], Dout ∈ [0, 2^n - 1])")
     modo = input("Modo [1/2]: ").strip()
-
-    Vlsb = Vref / (2 ** n)
-
+    Vlsb = Vref / (2**n)
+    
     if modo == "1":
         Vin_min = -Vref / 2
         Vin_max = +Vref / 2
@@ -404,12 +435,11 @@ def dount_step_graph():
         Vin = Vin_min + (Vin_max - Vin_min) * i / num_points
 
         if modo == "1":
-            Dout = round(Vin / Vlsb) + 2**(n - 1)
-            Dout = max(0, min(Dout, 2**n))  # saturação
+            Dout = int((Vin + Vref / 2) / Vlsb)
         else:
-            Dout = round(Vin / Vlsb)
-            Dout = max(0, min(Dout, 2**n - 1))  # saturação
+            Dout = int(Vin / Vlsb)
 
+        Dout = max(0, min(Dout, 2**n - 1))  # saturação
         Vin_values.append(Vin)
         Dout_values.append(Dout)
 
@@ -462,6 +492,120 @@ def clock_freq_calculator():
         print(f"Calculated f = {f} MHz")
     else:
         print("Invalid choice. Please run the program again.")
+        
+def calculate_vlsb():
+    """ Calcula Vlsb
+    
+    Args:
+        None
+        
+    Returns:
+        None
+    """
+    print("\nIdeal Vlsb Calculator")
+    print("======================")
+    print("1 - Ideal")
+    print("2 - Real")
+    choice = int(input("Enter your choice (1 or 2): "))
+    if choice == 1:
+        num_bits = int(input("Enter number of bits (n): "))
+        vref = float(input("Enter Vref value (V): "))
+        vlsb_ideal = calculate_vlsbi(vref, num_bits)
+        print("\nCalculated Ideal Vlsb = " + str(round(vlsb_ideal, 3)))
+    elif choice == 2:
+        vout_min = float(input("Enter Vout_min value: "))
+        vout_max = float(input("Enter Vout_max value: "))
+        num_bits = int(input("Enter number of bits (n): "))
+        vlsb_real = calculate_vlsbr(vout_min, vout_max, num_bits)
+        print("\nCalculated Real Vlsb = " + str(round(vlsb_real, 3)))
+    else:
+        print("Invalid choice. Please run the program again.")
+        
+def pipeline_dout():
+    print("\nPipeline Simulator")
+    print("======================")
+    num_estagios = int(input("Número de stages do pipeline: "))
+    bits_por_estagio = int(input("n bits por estágio: "))
+    vref = float(input("Vref: "))
+    vin = float(input("Vin: "))
+    residuos = [vin]
+    douts = []
+    valores_dac = []
+    print("\n--- Cálculos por stage ---")
+    for i in range(num_estagios):
+        vin_stage = residuos[-1]
+        dout_bin = val_to_bin(vin_stage, vref, bits_por_estagio)
+        douts.append(dout_bin)
+        # calcular DAC correspondente
+        nivel = int(dout_bin, 2)
+        passo = vref / (2 ** bits_por_estagio)
+        # Correção: O valor do DAC deve corresponder ao ponto médio do intervalo representado pelo código
+        dac_val = -vref / 2 + (nivel + 0.5) * passo
+        valores_dac.append(dac_val)
+        if i < num_estagios - 1:
+            # Correção: Resíduo é 2x(Vin-Vdac) em vez de 4x
+            res = 2 * (vin_stage - dac_val)
+            residuos.append(res)
+        print(f"Stage {i + 1}:")
+        print(f"  Vin: {vin_stage:.4f} V")
+        print(f"  Dout: {dout_bin} (decimal: {nivel})")
+        print(f"  DAC: {dac_val:.4f} V")
+        if i < num_estagios - 1:
+            print(f"  VRes: {res:.4f} V")
+    # Correção digital
+    bits_finais = douts[0]
+    for i in range(1, num_estagios):
+        bits_finais += douts[i][0]  # só MSB dos seguintes
+    decimal_final = int(bits_finais, 2)
+    nbits_total = len(bits_finais)
+    delta = vref / (2 ** nbits_total)
+    tensao_estim = -vref / 2 + decimal_final * delta
+    print("\n=== Resultado Final ===")
+    print("Bits concatenados:", bits_finais)
+    print("Código decimal:   ", decimal_final)
+    print(f"Tensão estimada:   {tensao_estim:.4f} V")
+
+def pipeline_snr():
+    snr_target = float(input("SNR desejado (dB): "))
+    amplitude_sinal = float(input("Amplitude do sinal (V): "))
+    vref = float(input("Valor de Vref (V): "))
+    v_low_bound = float(input("Valor mínimo de Vin (assumir vref/2): "))
+    v_high_bound = float(input("Valor máximo de Vin (assumir vref/2): "))
+    bits_por_estagio = int(input("Bits por estágio (ex: 2): "))
+    bits_redundantes = int(input("Bits redundantes por estágio (ex: 1): "))
+
+    if amplitude_sinal > v_high_bound or amplitude_sinal < v_low_bound:
+        print("\nA amplitude do sinal excede o limite. Verifica o intervalo do ADC.")
+        return 
+
+    # SNR real inclui penalização por amplitude
+    penalizacao = 20 * log10(amplitude_sinal / (vref / 2))
+    snr_ideal_necessaria = snr_target - penalizacao
+
+    # Cálculo da resolução mínima N
+    N = ceil((snr_ideal_necessaria - 1.76) / 6.02)
+
+    # Estágios necessários:
+    # - O primeiro estágio fornece todos os bits (sem redundância)
+    # - Os seguintes fornecem apenas (bits_por_estagio - bits_redundantes)
+    bits_primeiro = bits_por_estagio
+    bits_restantes = N - bits_primeiro
+    if bits_restantes <= 0:
+        num_estagios = 1
+    else:
+        bits_por_estagio_util = bits_por_estagio - bits_redundantes
+        if bits_por_estagio_util <= 0:
+            print("\nErro: bits úteis por estágio após redundância é ≤ 0.")
+            return
+        num_estagios = 1 + ceil(bits_restantes / bits_por_estagio_util)
+
+    # Resultados
+    print("\n======== RESULTADOS ========")
+    print(f"Resolução mínima necessária: {N} bits")
+    print(f"Número mínimo de estágios do pipeline: {num_estagios}")
+    print(f"Penalização de SNR por amplitude limitada: {penalizacao:.2f} dB")
+
+    
 
 def main():
     """Função de menu principal
@@ -477,11 +621,12 @@ def main():
         print("      CONVERSORES DE SINAL")
         print("         NOBREGA 2025")
         print("==================================")
-        print("1. INL/DNL Table Calculator")
-        print("2. SNRMax Calculator")
-        print("3. SNR Calculator")
-        print("4. Dout Step Graph")
+        print("1. Vlsb Calculator")
+        print("2. INL/DNL Table Calculator")
+        print("3. SNR Tools")
+        print("4. Pipeline Tools")
         print("5. Clock Frequency Calculator")
+        
         print("0. Exit")
         print("----------------------------------")
         
@@ -492,15 +637,41 @@ def main():
                 print("Exiting program. Obrigado e volte sempre!")
                 break
             elif choice == 1:
-                inl_dnl_calculator()
+                calculate_vlsb()
+                
             elif choice == 2:
-                snr_max_calculator()
+                inl_dnl_calculator()
+                
             elif choice == 3:
-                snr_calculator()
+                print("SNR Tools")
+                print("1. SNRMax Calculator") 
+                print("2. SNR Calculator")
+                snr_choice = int(input("Enter your choice (1 or 2): "))
+                if snr_choice == 1:
+                    snr_max_calculator()
+                elif snr_choice == 2:
+                    snr_calculator()
+                else:
+                    print("Invalid choice. Please try again.")
+                    
             elif choice == 4:
-                dount_step_graph()
+                print("Pipeline Tools")
+                print("1. Dout Step Graph")
+                print("2. Pipeline SNR")
+                print("3. Pipeline Dout")
+                pipeline_choice = int(input("Enter your choice (1-3): "))
+                if pipeline_choice == 1:
+                    dount_step_graph()
+                elif pipeline_choice == 2:
+                    pipeline_snr()
+                elif pipeline_choice == 3:
+                    pipeline_dout()
+                else:
+                    print("Invalid choice. Please try again.")
+                    
             elif choice == 5:
                 clock_freq_calculator()
+                
             else:
                 print("Invalid option. Please try again.")
         except ValueError:
