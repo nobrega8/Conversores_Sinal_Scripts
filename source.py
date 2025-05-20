@@ -17,6 +17,23 @@ def binary_to_decimal(binary_bits):
     """
     return int(binary_bits, 2)
 
+def bin_to_val(bin_str, vref, bits):
+        """Converte binário para valor de tensão DAC"""
+        nivel = int(bin_str, 2)
+        max_nivel = 2**bits - 1
+        passo = vref / (2**bits)
+        return -vref/2 + nivel * passo
+    
+def val_to_bin(val, vref, bits):
+    """Converte um valor analógico para binário"""
+    steps = 2**bits
+    delta = vref / steps
+    code = int((val + vref/2) / delta)
+    # Limita o código entre 0 e 2^bits-1
+    code = max(0, min(code, steps - 1))
+    # Converte para binário e remove o '0b' do início
+    return format(code, f'0{bits}b')
+
 def calculate_vlsbr(vout_min, vout_max, num_bits):
     """Calcula VlsbReal usando fórmula: (VoutMax - VoutMin)/(2^n - 1)
     
@@ -505,33 +522,49 @@ def calculate_vlsb():
         print("Invalid choice. Please run the program again.")
         
 def pipeline_dout():
+    print("=== Simulação de Pipeline ADC ===\n")
     num_estagios = int(input("Número de estágios do pipeline: "))
-    bits_por_estagio = int(input("Número de bits por estágio (ex: 2): "))
-
-    if bits_por_estagio < 1:
-        print("Erro: precisa de pelo menos 1 bit por estágio.")
-        return
-
+    bits_por_estagio = int(input("Número de bits por estágio: "))
+    vref = float(input("Vref: "))
+    vin = float(input("Tensão de entrada: "))
+    residuos = [vin]
     douts = []
-    print("\nInsere os dout de cada estágio (binário com", bits_por_estagio, "bits):")
+    valores_dac = []
+    print("\n--- Cálculos por estágio ---")
     for i in range(num_estagios):
-        while True:
-            dout = input(f"  Dout do estágio {i + 1}: ").strip()
-            if len(dout) == bits_por_estagio and all(c in '01' for c in dout):
-                douts.append(dout)
-                break
-            else:
-                print("    Erro: insere um valor binário correto.")
-
-    # Começa com todos os bits do primeiro estágio
+        vin_stage = residuos[-1]
+        dout_bin = val_to_bin(vin_stage, vref, bits_por_estagio)
+        douts.append(dout_bin)
+        # calcular DAC correspondente
+        nivel = int(dout_bin, 2)
+        passo = vref / (2 ** bits_por_estagio)
+        # Correção: O valor do DAC deve corresponder ao ponto médio do intervalo representado pelo código
+        dac_val = -vref / 2 + (nivel + 0.5) * passo
+        valores_dac.append(dac_val)
+        if i < num_estagios - 1:
+            # Correção: Resíduo é 2x(Vin-Vdac) em vez de 4x
+            res = 2 * (vin_stage - dac_val)
+            residuos.append(res)
+        print(f"Estágio {i + 1}:")
+        print(f"  Vin: {vin_stage:.4f} V")
+        print(f"  Dout: {dout_bin} (decimal: {nivel})")
+        print(f"  DAC: {dac_val:.4f} V")
+        if i < num_estagios - 1:
+            print(f"  Resíduo: {res:.4f} V")
+    # Correção digital
     bits_finais = douts[0]
-
-    # De cada estágio seguinte, usa só o primeiro bit
     for i in range(1, num_estagios):
-        bits_finais += douts[i][0]
+        bits_finais += douts[i][0]  # só MSB dos seguintes
+    decimal_final = int(bits_finais, 2)
+    nbits_total = len(bits_finais)
+    delta = vref / (2 ** nbits_total)
+    tensao_estim = -vref / 2 + decimal_final * delta
+    print("\n=== Resultado Final ===")
+    print("Bits concatenados:", bits_finais)
+    print("Código decimal:   ", decimal_final)
+    print(f"Tensão estimada:   {tensao_estim:.4f} V")
 
-    print("\nDout final (concatenado):", bits_finais)
-    print("Dout final (decimal):", int(bits_finais, 2))
+
 
 def main():
     """Função de menu principal
