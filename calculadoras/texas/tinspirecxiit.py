@@ -1,7 +1,7 @@
 ## Texas Instruments
 ## Nspire CX II T
 ## 2025 (c) Afonso Nóbrega
-##v2.6.1
+## v2.6.1
 
 from math import *
 

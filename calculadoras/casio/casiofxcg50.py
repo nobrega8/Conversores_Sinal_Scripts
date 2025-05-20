@@ -1,3 +1,8 @@
+## Casio
+## Fx-CG50
+## 2025 (c) Afonso Nóbrega
+## v1.0.1
+
 from math import *
 
 def bin2dec(b):
