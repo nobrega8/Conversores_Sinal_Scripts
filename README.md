@@ -16,19 +16,20 @@
 ## 📝 Visão Geral
 
 ### v1.0.0
+### v1.0.0
 
-1. **📈 Calculadora de Tabelas INL/DNL** - Para análise de linearidade diferencial e integral
-2. **🔊 Calculadora SNR max** - Para relações entre SNR e número de bits
-3. **📲 Calculadora SNR** - Para análise completa de ruído incluindo efeitos de jitter
+1. **📈 Calculadora de Tabelas INL/DNL** – Para análise de linearidade diferencial e integral  
+2. **🔊 Calculadora SNR max** – Para relações entre SNR e número de bits  
+3. **📲 Calculadora SNR** – Para análise completa de ruído incluindo efeitos de jitter  
 
 ### v2.2.0
 
-5. **🕒 Clock Frequency** -  Calcular o Clock Frequency a partir dos numero de bits
+4. **🕒 Clock Frequency** – Calcular o Clock Frequency a partir do número de bits  
 
 ### v2.6.0
 
-6. **Real and Ideal VLSB** - Calcular o VLSB real e ideal
-7. **Pipeline Tools** - Ferramentas para simulação de pipeline ADCs
+5. **🔧 Real and Ideal VLSB** – Calcular o VLSB real e ideal  
+6. **🧪 Pipeline Tools** – Ferramentas para simulação de ADCs em pipeline  
 
 ## 🎓 Uso Académico
 
