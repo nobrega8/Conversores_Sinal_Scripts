@@ -522,15 +522,16 @@ def calculate_vlsb():
         print("Invalid choice. Please run the program again.")
         
 def pipeline_dout():
-    print("=== Simulação de Pipeline ADC ===\n")
-    num_estagios = int(input("Número de estágios do pipeline: "))
-    bits_por_estagio = int(input("Número de bits por estágio: "))
+    print("\nPipeline Simulator")
+    print("======================")
+    num_estagios = int(input("Número de stages do pipeline: "))
+    bits_por_estagio = int(input("n bits por estágio: "))
     vref = float(input("Vref: "))
-    vin = float(input("Tensão de entrada: "))
+    vin = float(input("Vin: "))
     residuos = [vin]
     douts = []
     valores_dac = []
-    print("\n--- Cálculos por estágio ---")
+    print("\n--- Cálculos por stage ---")
     for i in range(num_estagios):
         vin_stage = residuos[-1]
         dout_bin = val_to_bin(vin_stage, vref, bits_por_estagio)
@@ -545,12 +546,12 @@ def pipeline_dout():
             # Correção: Resíduo é 2x(Vin-Vdac) em vez de 4x
             res = 2 * (vin_stage - dac_val)
             residuos.append(res)
-        print(f"Estágio {i + 1}:")
+        print(f"Stage {i + 1}:")
         print(f"  Vin: {vin_stage:.4f} V")
         print(f"  Dout: {dout_bin} (decimal: {nivel})")
         print(f"  DAC: {dac_val:.4f} V")
         if i < num_estagios - 1:
-            print(f"  Resíduo: {res:.4f} V")
+            print(f"  VRes: {res:.4f} V")
     # Correção digital
     bits_finais = douts[0]
     for i in range(1, num_estagios):
@@ -564,7 +565,47 @@ def pipeline_dout():
     print("Código decimal:   ", decimal_final)
     print(f"Tensão estimada:   {tensao_estim:.4f} V")
 
+def pipeline_snr():
+    snr_target = float(input("SNR desejado (dB): "))
+    amplitude_sinal = float(input("Amplitude do sinal (V): "))
+    vref = float(input("Valor de Vref (V): "))
+    v_low_bound = float(input("Valor mínimo de Vin (assumir vref/2): "))
+    v_high_bound = float(input("Valor máximo de Vin (assumir vref/2): "))
+    bits_por_estagio = int(input("Bits por estágio (ex: 2): "))
+    bits_redundantes = int(input("Bits redundantes por estágio (ex: 1): "))
 
+    if amplitude_sinal > v_high_bound or amplitude_sinal < v_low_bound:
+        print("\nA amplitude do sinal excede o limite. Verifica o intervalo do ADC.")
+        return 
+
+    # SNR real inclui penalização por amplitude
+    penalizacao = 20 * log10(amplitude_sinal / (vref / 2))
+    snr_ideal_necessaria = snr_target - penalizacao
+
+    # Cálculo da resolução mínima N
+    N = ceil((snr_ideal_necessaria - 1.76) / 6.02)
+
+    # Estágios necessários:
+    # - O primeiro estágio fornece todos os bits (sem redundância)
+    # - Os seguintes fornecem apenas (bits_por_estagio - bits_redundantes)
+    bits_primeiro = bits_por_estagio
+    bits_restantes = N - bits_primeiro
+    if bits_restantes <= 0:
+        num_estagios = 1
+    else:
+        bits_por_estagio_util = bits_por_estagio - bits_redundantes
+        if bits_por_estagio_util <= 0:
+            print("\nErro: bits úteis por estágio após redundância é ≤ 0.")
+            return
+        num_estagios = 1 + ceil(bits_restantes / bits_por_estagio_util)
+
+    # Resultados
+    print("\n======== RESULTADOS ========")
+    print(f"Resolução mínima necessária: {N} bits")
+    print(f"Número mínimo de estágios do pipeline: {num_estagios}")
+    print(f"Penalização de SNR por amplitude limitada: {penalizacao:.2f} dB")
+
+    
 
 def main():
     """Função de menu principal
@@ -580,40 +621,61 @@ def main():
         print("      CONVERSORES DE SINAL")
         print("         NOBREGA 2025")
         print("==================================")
-        print("1. INL/DNL Table Calculator")
-        print("2. SNRMax Calculator")
-        print("3. SNR Calculator")
-        print("4. Dout Step Graph")
+        print("1. Vlsb Calculator")
+        print("2. INL/DNL Table Calculator")
+        print("3. SNR Tools")
+        print("4. Pipeline Tools")
         print("5. Clock Frequency Calculator")
-        print("6. Vlsb Calculator")
-        print("7. Pipeline Dout")
+        
         print("0. Exit")
         print("----------------------------------")
         
         try:
-            choice = int(input("Enter your choice (0-7): "))
+            choice = int(input("Enter your choice (0-5): "))
             
             if choice == 0:
                 print("Exiting program. Obrigado e volte sempre!")
                 break
             elif choice == 1:
-                inl_dnl_calculator()
+                calculate_vlsb()
+                
             elif choice == 2:
-                snr_max_calculator()
+                inl_dnl_calculator()
+                
             elif choice == 3:
-                snr_calculator()
+                print("SNR Tools")
+                print("1. SNRMax Calculator") 
+                print("2. SNR Calculator")
+                snr_choice = int(input("Enter your choice (1 or 2): "))
+                if snr_choice == 1:
+                    snr_max_calculator()
+                elif snr_choice == 2:
+                    snr_calculator()
+                else:
+                    print("Invalid choice. Please try again.")
+                    
             elif choice == 4:
-                dount_step_graph()
+                print("Pipeline Tools")
+                print("1. Dout Step Graph")
+                print("2. Pipeline SNR")
+                print("3. Pipeline Dout")
+                pipeline_choice = int(input("Enter your choice (1-3): "))
+                if pipeline_choice == 1:
+                    dount_step_graph()
+                elif pipeline_choice == 2:
+                    pipeline_snr()
+                elif pipeline_choice == 3:
+                    pipeline_dout()
+                else:
+                    print("Invalid choice. Please try again.")
+                    
             elif choice == 5:
                 clock_freq_calculator()
-            elif choice == 6:
-                calculate_vlsb()
-            elif choice == 7:
-                pipeline_dout()
+                
             else:
                 print("Invalid option. Please try again.")
         except ValueError:
-            print("Please enter a valid option (0-7).")
+            print("Please enter a valid option (0-5).")
         
         input("\nPress Enter to return to main menu...")
 
