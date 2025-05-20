@@ -21,10 +21,6 @@
 2. **🔊 Calculadora SNR max** - Para relações entre SNR e número de bits
 3. **📲 Calculadora SNR** - Para análise completa de ruído incluindo efeitos de jitter
 
-### v2.1.0
-
-4. **📊 Dout Graph** - Permite visualizar graficamente a saída digital
-
 ### v2.2.0
 
 5. **🕒 Clock Frequency** -  Calcular o Clock Frequency a partir dos numero de bits
@@ -32,7 +28,7 @@
 ### v2.5.0
 
 6. **Real and Ideal VLSB** - Calcular o VLSB real e ideal
-7. **Pipeline Dout** - Calculo do Dout tendo em conta os stages e os bits redundantes
+7. **Pipeline Tools** - Ferramentas para simulação de pipeline ADCs
 
 ## 🎓 Uso Académico
 
