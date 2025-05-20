@@ -11,7 +11,7 @@
 | [CX CAS](https://github.com/nobrega8/Conversores_Sinal_Scripts/tree/main/calculadoras/texas/tinspirecx)      | ⚠️ Limitada | Utiliza TI-Basic        | v2.6.1     |
 | [CX](https://github.com/nobrega8/Conversores_Sinal_Scripts/tree/main/calculadoras/texas/tinspirecx)      | ⚠️ Limitada | Utiliza TI-Basic        | v2.6.1     |
 | **Casio FX Series** ||||
-| [FX-CG50](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/casio/casiofxcg50.py)       | ✅ Completa | Espaço de ecrã limitado | v1.0.1    |
+| [FX-CG50](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/casio/casiofxcg50.py)       | ✅ Completa | Espaço de ecrã limitado | v2.6.1    |
 
 ## 📝 Visão Geral
 
@@ -40,6 +40,7 @@ Desenvolvido por:
 
 - **Afonso Nóbrega** - Source // Nspire CX II-T
 - **João Pedro Antunes** - Nspire CX
+- **Diogo Ventura** - Casio FX-CG50
   
 Copyright © 2025
 
