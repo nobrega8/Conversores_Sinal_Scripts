@@ -15,7 +15,7 @@ Podes usá-lo como base para adaptar o código a um novo modelo de calculadora. 
 
 Depois de adaptares o `source.py`, deves criar um novo ficheiro Python na pasta correspondente ao fabricante e modelo da calculadora:
 
-```
+```ts
 calculadoras/
 │
 ├── texas/
