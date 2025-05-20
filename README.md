@@ -16,7 +16,6 @@
 ## 📝 Visão Geral
 
 ### v1.0.0
-### v1.0.0
 
 1. **📈 Calculadora de Tabelas INL/DNL** – Para análise de linearidade diferencial e integral  
 2. **🔊 Calculadora SNR max** – Para relações entre SNR e número de bits  
