@@ -605,8 +605,45 @@ def pipeline_snr():
     print(f"Número mínimo de estágios do pipeline: {num_estagios}")
     print(f"Penalização de SNR por amplitude limitada: {penalizacao:.2f} dB")
 
-    
 
+
+def sd_snr():
+    print("\nSigma-Delta SNR Calculator")
+    print("================================")
+    n = int(input("n bits: "))
+    Vin = float(input("Introduz Vin (em volts): "))
+    osr = float(input("Introduz o OSR: "))
+    order = int(input("Introduz a ordem (1, 2 ou 3): "))
+
+    if order not in [1, 2, 3]:
+        print("Erro: ordem inválida.")
+        return
+
+    gains = {1: 30, 2: 50, 3: 70}
+    corrections = {1: -5.17, 2: -12.9, 3: -20.9}
+
+    snr = 6.02 * n + 1.76 + gains[order] * log10(osr) + corrections[order] + 20 * log10(Vin)
+    print(f"\nSNR calculado: {snr:.2f} dB")
+
+def sd_osr():
+    print("\nSigma-Delta OSR Calculator (com V_REF e V_lsb)")
+    print("===============================================")
+    order = int(input("Introduz a ordem do modulador Sigma-Delta (1, 2 ou 3): "))
+    snr = float(input("Introduz o SNR alvo (em dB): "))
+    n = int(input("Introduz o número de bits do quantizador (e.g. 1 ou 3): "))
+    Vin = float(input("Introduz Vin (em volts): "))
+
+    if order not in [1, 2, 3]:
+        print("Erro: ordem inválida.")
+        return
+
+    gains = {1: 30, 2: 50, 3: 70}
+    corrections = {1: -5.17, 2: -12.9, 3: -20.9}
+
+    osr = 10**((snr - 1.76 - 6.02 * n - corrections[order] - 20 * log10(Vin)) / gains[order])
+    print(f"\nOSR necessário para atingir SNR de {snr} dB: {osr:.3f}")
+    
+    
 def main():
     """Função de menu principal
     
@@ -626,6 +663,7 @@ def main():
         print("3. SNR Tools")
         print("4. Pipeline Tools")
         print("5. Clock Frequency Calculator")
+        print("6. Sigma-Delta Tools")
         
         print("0. Exit")
         print("----------------------------------")
@@ -671,6 +709,18 @@ def main():
                     
             elif choice == 5:
                 clock_freq_calculator()
+                
+            elif choice == 6:
+                print("Sigma-Delta Tools")
+                print("1. SD SNR")
+                print("2. OSR")
+                sigma_delta_choice = int(input("Enter your choice (1-3): "))
+                if sigma_delta_choice == 1:
+                    sd_snr()
+                if sigma_delta_choice == 2:
+                    sd_osr()
+                else:
+                    print("Invalid choice. Please try again.")
                 
             else:
                 print("Invalid option. Please try again.")
