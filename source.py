@@ -610,36 +610,37 @@ def pipeline_snr():
 def sd_snr():
     print("\nSigma-Delta SNR Calculator")
     print("================================")
-    n= int(input("n bits: "))
+    n = int(input("n bits: "))
     Vin = float(input("Introduz Vin (em volts): "))
     osr = float(input("Introduz o OSR: "))
-    order = int(input("Introduz a ordem: "))
-    if order==1:
-        snr = 6.02 * n + 1.76 + 30 * log10(osr) - 5.17 + 20 * log10(Vin)
-    if order==2:
-        snr = 6.02 * n + 1.76 + 50 * log10(osr) - 12.9 + 20 * log10(Vin) 
-    if order==3:
-        snr = 6.02 * n + 1.76 + 70 * log10(osr) - 20.9 + 20 * log10(Vin)
-    print(f"\nSNR calculado: {snr:.2f} dB")
-    
+    order = int(input("Introduz a ordem (1, 2 ou 3): "))
 
+    if order not in [1, 2, 3]:
+        print("Erro: ordem inválida.")
+        return
+
+    gains = {1: 30, 2: 50, 3: 70}
+    corrections = {1: -5.17, 2: -12.9, 3: -20.9}
+
+    snr = 6.02 * n + 1.76 + gains[order] * log10(osr) + corrections[order] + 20 * log10(Vin)
+    print(f"\nSNR calculado: {snr:.2f} dB")
 
 def sd_osr():
-    """Calculadora de OSR para modulador Sigma-Delta baseada em V_REF, V_lsb e SNR alvo."""
     print("\nSigma-Delta OSR Calculator (com V_REF e V_lsb)")
     print("===============================================")
-    order = int(input("Introduz a ordem do modulador Sigma-Delta (1 ou 2): "))
-    snr=float(input("Introduz o SNR alvo (em dB): "))
-    n= int(input("Introduz o número de bits do quantizador (e.g. 1 ou 3): "))
+    order = int(input("Introduz a ordem do modulador Sigma-Delta (1, 2 ou 3): "))
+    snr = float(input("Introduz o SNR alvo (em dB): "))
+    n = int(input("Introduz o número de bits do quantizador (e.g. 1 ou 3): "))
     Vin = float(input("Introduz Vin (em volts): "))
-    
-    if order==1:
-        osr = 10**((snr-1.76-6.02*n+5.17-20*log10(Vin))/30)
-    if order==2:
-        osr = 10**((snr-1.76-6.02*n+12.9-20*log10(Vin))/50)
-    if order==3:
-        osr = 10**((snr-1.76-6.02*n+20.9-20*log10(Vin))/70)
-    
+
+    if order not in [1, 2, 3]:
+        print("Erro: ordem inválida.")
+        return
+
+    gains = {1: 30, 2: 50, 3: 70}
+    corrections = {1: -5.17, 2: -12.9, 3: -20.9}
+
+    osr = 10**((snr - 1.76 - 6.02 * n - corrections[order] - 20 * log10(Vin)) / gains[order])
     print(f"\nOSR necessário para atingir SNR de {snr} dB: {osr:.3f}")
     
     
