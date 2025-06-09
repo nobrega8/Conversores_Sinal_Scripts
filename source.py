@@ -617,9 +617,10 @@ def sd_snr():
     if order==1:
         snr = 6.02 * n + 1.76 + 30 * log10(osr) - 5.17 + 20 * log10(Vin)
     if order==2:
-        snr2 = 6.02 * n + 1.76 + 50 * log10(osr) - 12.9 + 20 * log10(Vin) 
+        snr = 6.02 * n + 1.76 + 50 * log10(osr) - 12.9 + 20 * log10(Vin) 
+    if order==3:
+        snr = 6.02 * n + 1.76 + 70 * log10(osr) - 20.9 + 20 * log10(Vin)
     print(f"\nSNR calculado: {snr:.2f} dB")
-    print(f"SNR calculado (2ª ordem): {snr2:.2f} dB")
     
 
 
@@ -632,9 +633,13 @@ def sd_osr():
     n= int(input("Introduz o número de bits do quantizador (e.g. 1 ou 3): "))
     Vin = float(input("Introduz Vin (em volts): "))
     
-    osr = 10**((snr-1.76-6.02*n+5.17-20*log10(Vin))/30)
-    #elif order == 2:
-    #    osr = 10**(((snr-20*log10(Vin))-1.76-6.02*n+5.17-20*log10(Vin))/30)
+    if order==1:
+        osr = 10**((snr-1.76-6.02*n+5.17-20*log10(Vin))/30)
+    if order==2:
+        osr = 10**((snr-1.76-6.02*n+12.9-20*log10(Vin))/50)
+    if order==3:
+        osr = 10**((snr-1.76-6.02*n+20.9-20*log10(Vin))/70)
+    
     print(f"\nOSR necessário para atingir SNR de {snr} dB: {osr:.3f}")
     
     
