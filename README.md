@@ -28,7 +28,7 @@
 5. **🔧 Real and Ideal VLSB** – Calcular o VLSB real e ideal  
 6. **🧪 Pipeline Tools** – Ferramentas para simulação de ADCs em pipeline
 
-## v3.0.0
+### v3.0.0
 
 7. **🔉 Sigma-Delta SNR**  
    Calculadora de SNR para moduladores Sigma-Delta de 1ª a 3ª ordem, considerando OSR, ordem e Vin.
