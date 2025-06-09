@@ -605,6 +605,34 @@ def pipeline_snr():
     print(f"Número mínimo de estágios do pipeline: {num_estagios}")
     print(f"Penalização de SNR por amplitude limitada: {penalizacao:.2f} dB")
 
+def sd_snr():
+    """Calculadora de SNR para moduladores Sigma-Delta.
+    Permite introduzir a ordem, bits do quantizador e OSR.
+    """
+
+    print("\nSigma-Delta SNR Calculator")
+    print("===========================")
+
+    # Leitura dos parâmetros
+    n = int(input("Enter modulator order (e.g. 1, 2, ...): "))
+    N = int(input("Enter number of quantizer bits (e.g. 1 for 1-bit quantizer): "))
+    OSR = float(input("Enter oversampling ratio (OSR): "))
+    vin_scale = float(input("Enter signal amplitude relative to Vref (e.g. 1 for full-scale, 0.1 for Vref/10): "))
+
+    # Verifica se valores são válidos
+    if vin_scale <= 0 or vin_scale > 1:
+        print("Signal amplitude must be in (0, 1].")
+        return
+
+    # Cálculo da SNR para entrada de amplitude total
+    snr_full_scale = 6.02 * N + 1.76 + 10 * (2 * n + 1) * log10(OSR)
+
+    # Ajuste para sinal inferior a full-scale
+    snr_adjusted = snr_full_scale + 20 * log10(vin_scale)
+
+    print("\n--- Results ---")
+    print(f"SNR at full-scale input: {snr_full_scale:.2f} dB")
+    print(f"SNR with input = {vin_scale} x Vref: {snr_adjusted:.2f} dB")
     
 
 def main():
@@ -626,6 +654,7 @@ def main():
         print("3. SNR Tools")
         print("4. Pipeline Tools")
         print("5. Clock Frequency Calculator")
+        print("6. Sigma-Delta Tools")
         
         print("0. Exit")
         print("----------------------------------")
@@ -671,6 +700,15 @@ def main():
                     
             elif choice == 5:
                 clock_freq_calculator()
+                
+            elif choice == 6:
+                print("Sigma-Delta Tools")
+                print("1. SD SNR")
+                sigma_delta_choice = int(input("Enter your choice (1-3): "))
+                if sigma_delta_choice == 1:
+                    sd_snr()
+                else:
+                    print("Invalid choice. Please try again.")
                 
             else:
                 print("Invalid option. Please try again.")
