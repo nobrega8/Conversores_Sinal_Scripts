@@ -4,7 +4,7 @@
 
 | Modelo de Calculadora | Compatibilidade | Problemas Conhecidos       | Último Update |
 |------------------------|-----------------|-----------------------------|----------------|
-| **Source** | -- | -- | v2.6.1 |
+| **Source** | -- | -- | v3.0.0 |
 | **Texas Nspire CX Series** ||||
 | [CX II-T](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/calculadoras/texas/tinspirecxiit.py)     | ✅ Completa | Nenhum                  | v2.6.1     |
 | [CX](https://github.com/nobrega8/Conversores_Sinal_Scripts/tree/main/calculadoras/texas/tinspirecx)      | ⚠️ Limitada | Utiliza TI-Basic        | v2.6.1     |
@@ -26,7 +26,15 @@
 ### v2.6.0
 
 5. **🔧 Real and Ideal VLSB** – Calcular o VLSB real e ideal  
-6. **🧪 Pipeline Tools** – Ferramentas para simulação de ADCs em pipeline  
+6. **🧪 Pipeline Tools** – Ferramentas para simulação de ADCs em pipeline
+
+## v3.0.0
+
+7. **🔉 Sigma-Delta SNR**  
+   Calculadora de SNR para moduladores Sigma-Delta de 1ª a 3ª ordem, considerando OSR, ordem e Vin.
+8. **🧮 Sigma-Delta OSR**  
+   Determinação do OSR necessário para atingir um SNR alvo, dado o número de bits, Vin e a ordem do modulador.
+
 
 ## 🎓 Uso Académico
 
