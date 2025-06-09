@@ -635,6 +635,47 @@ def sd_snr():
     print(f"SNR with input = {vin_scale} x Vref: {snr_adjusted:.2f} dB")
     
 
+
+def sd_osr():
+    """Calculadora de OSR para moduladores Sigma-Delta.
+    Inclui fator de ruído para entrada senoidal e modulação 1-bit.
+    """
+
+    print("\nSigma-Delta OSR Calculator")
+    print("==============================================")
+
+    # Leitura dos parâmetros
+    n = int(input("Enter modulator order: "))
+    N = int(input("Enter number of quantizer bits: "))
+    target_snr = float(input("Enter desired SNR in dB: "))
+    vin_scale = float(input("Enter signal amplitude relative to Vref (e.g. 1 for full-scale, 0.1 for Vref/10): "))
+
+    # Verifica validade
+    if vin_scale <= 0 or vin_scale > 1:
+        print("Signal amplitude must be in (0, 1].")
+        return
+
+    # Constante de ruído para entrada sinusoidal
+    noise_constant = 10 * log10(3 / (pi ** 2))  # ≈ -5.23 dB
+
+    # Cálculo da SNR base (sem OSR)
+    base_snr = 6.02 * N + 1.76 + 20 * log10(vin_scale) + noise_constant
+
+    # Parte variável
+    delta_snr = target_snr - base_snr
+
+    if delta_snr <= 0:
+        print("Desired SNR is too low for the given signal amplitude and quantizer.")
+        return
+
+    # Cálculo da OSR
+    osr = 10 ** (delta_snr / (10 * (2 * n + 1)))
+
+    print("\n--- Results ---")
+    print(f"Minimum required OSR: {osr:.4f}")
+
+    
+
 def main():
     """Função de menu principal
     
@@ -704,9 +745,12 @@ def main():
             elif choice == 6:
                 print("Sigma-Delta Tools")
                 print("1. SD SNR")
+                print("2. OSR")
                 sigma_delta_choice = int(input("Enter your choice (1-3): "))
                 if sigma_delta_choice == 1:
                     sd_snr()
+                if sigma_delta_choice == 2:
+                    sd_osr()
                 else:
                     print("Invalid choice. Please try again.")
                 
