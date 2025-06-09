@@ -605,77 +605,39 @@ def pipeline_snr():
     print(f"Número mínimo de estágios do pipeline: {num_estagios}")
     print(f"Penalização de SNR por amplitude limitada: {penalizacao:.2f} dB")
 
+
+
 def sd_snr():
-    """Calculadora de SNR para moduladores Sigma-Delta.
-    Permite introduzir a ordem, bits do quantizador e OSR.
-    """
-
     print("\nSigma-Delta SNR Calculator")
-    print("===========================")
-
-    # Leitura dos parâmetros
-    n = int(input("Enter modulator order (e.g. 1, 2, ...): "))
-    N = int(input("Enter number of quantizer bits (e.g. 1 for 1-bit quantizer): "))
-    OSR = float(input("Enter oversampling ratio (OSR): "))
-    vin_scale = float(input("Enter signal amplitude relative to Vref (e.g. 1 for full-scale, 0.1 for Vref/10): "))
-
-    # Verifica se valores são válidos
-    if vin_scale <= 0 or vin_scale > 1:
-        print("Signal amplitude must be in (0, 1].")
-        return
-
-    # Cálculo da SNR para entrada de amplitude total
-    snr_full_scale = 6.02 * N + 1.76 + 10 * (2 * n + 1) * log10(OSR)
-
-    # Ajuste para sinal inferior a full-scale
-    snr_adjusted = snr_full_scale + 20 * log10(vin_scale)
-
-    print("\n--- Results ---")
-    print(f"SNR at full-scale input: {snr_full_scale:.2f} dB")
-    print(f"SNR with input = {vin_scale} x Vref: {snr_adjusted:.2f} dB")
+    print("================================")
+    n= int(input("n bits: "))
+    Vin = float(input("Introduz Vin (em volts): "))
+    osr = float(input("Introduz o OSR: "))
+    order = int(input("Introduz a ordem: "))
+    if order==1:
+        snr = 6.02 * n + 1.76 + 30 * log10(osr) - 5.17 + 20 * log10(Vin)
+    if order==2:
+        snr2 = 6.02 * n + 1.76 + 50 * log10(osr) - 12.9 + 20 * log10(Vin) 
+    print(f"\nSNR calculado: {snr:.2f} dB")
+    print(f"SNR calculado (2ª ordem): {snr2:.2f} dB")
     
 
 
 def sd_osr():
-    """Calculadora de OSR para moduladores Sigma-Delta.
-    Inclui fator de ruído para entrada senoidal e modulação 1-bit.
-    """
-
-    print("\nSigma-Delta OSR Calculator")
-    print("==============================================")
-
-    # Leitura dos parâmetros
-    n = int(input("Enter modulator order: "))
-    N = int(input("Enter number of quantizer bits: "))
-    target_snr = float(input("Enter desired SNR in dB: "))
-    vin_scale = float(input("Enter signal amplitude relative to Vref (e.g. 1 for full-scale, 0.1 for Vref/10): "))
-
-    # Verifica validade
-    if vin_scale <= 0 or vin_scale > 1:
-        print("Signal amplitude must be in (0, 1].")
-        return
-
-    # Constante de ruído para entrada sinusoidal
-    noise_constant = 10 * log10(3 / (pi ** 2))  # ≈ -5.23 dB
-
-    # Cálculo da SNR base (sem OSR)
-    base_snr = 6.02 * N + 1.76 + 20 * log10(vin_scale) + noise_constant
-
-    # Parte variável
-    delta_snr = target_snr - base_snr
-
-    if delta_snr <= 0:
-        print("Desired SNR is too low for the given signal amplitude and quantizer.")
-        return
-
-    # Cálculo da OSR
-    osr = 10 ** (delta_snr / (10 * (2 * n + 1)))
-
-    print("\n--- Results ---")
-    print(f"Minimum required OSR: {osr:.4f}")
-
+    """Calculadora de OSR para modulador Sigma-Delta baseada em V_REF, V_lsb e SNR alvo."""
+    print("\nSigma-Delta OSR Calculator (com V_REF e V_lsb)")
+    print("===============================================")
+    order = int(input("Introduz a ordem do modulador Sigma-Delta (1 ou 2): "))
+    snr=float(input("Introduz o SNR alvo (em dB): "))
+    n= int(input("Introduz o número de bits do quantizador (e.g. 1 ou 3): "))
+    Vin = float(input("Introduz Vin (em volts): "))
     
-
+    osr = 10**((snr-1.76-6.02*n+5.17-20*log10(Vin))/30)
+    #elif order == 2:
+    #    osr = 10**(((snr-20*log10(Vin))-1.76-6.02*n+5.17-20*log10(Vin))/30)
+    print(f"\nOSR necessário para atingir SNR de {snr} dB: {osr:.3f}")
+    
+    
 def main():
     """Função de menu principal
     
