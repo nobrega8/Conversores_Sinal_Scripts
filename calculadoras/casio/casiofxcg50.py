@@ -1,7 +1,7 @@
 ## Casio
 ## Fx-CG50
 ## 2025 (c) Afonso Nóbrega
-## v2.6.1
+## v3.0.0
 
 from math import *
 
@@ -501,6 +501,56 @@ def pipeline_snr():
     print("Número mínimo de estágios do pipeline: {}".format(num_estagios))
     print("Penalização de SNR por amplitude limitada: {:.2f} dB".format(penalizacao))        
 
+def sd_snr():
+    print("Sigma-Delta SNR")
+    print("=======================")
+    n = int(input("n bits: "))
+    Vin = float(input("Vin (V): "))
+    osr = float(input("OSR: "))
+    order = int(input("Ordem (1-3): "))
+
+    if order not in [1, 2, 3]:
+        print("Erro: Ordem inválida")
+        return
+
+    if order == 1:
+        ganho = 30
+        correcao = -5.17
+    elif order == 2:
+        ganho = 50
+        correcao = -12.9
+    else:
+        ganho = 70
+        correcao = -20.9
+
+    snr = 6.02 * n + 1.76 + ganho * log10(osr) + correcao + 20 * log10(Vin)
+    print("SNR calculado: {:.2f} dB".format(snr))
+    
+def sd_osr():
+    print("Sigma-Delta OSR")
+    print("=========================")
+    order = int(input("Ordem (1-3): "))
+    snr = float(input("SNR alvo (dB): "))
+    n = int(input("Bits do quantizador: "))
+    Vin = float(input("Vin (V): "))
+
+    if order not in [1, 2, 3]:
+        print("Erro: Ordem inválida")
+        return
+
+    if order == 1:
+        ganho = 30
+        correcao = -5.17
+    elif order == 2:
+        ganho = 50
+        correcao = -12.9
+    else:
+        ganho = 70
+        correcao = -20.9
+
+    osr = 10 ** ((snr - 1.76 - 6.02 * n - correcao - 20 * log10(Vin)) / ganho)
+    print("OSR necessário: {:.3f}".format(osr))
+
 def main():
     """Função de menu principal
     
@@ -520,6 +570,7 @@ def main():
         print("3. SNR Tools")
         print("4. Pipeline Tools")
         print("5. Clock Frequency Calculator")
+        print("6. Sigma-Delta Tools")
         
         print("0. Exit")
         print("----------------------------------")
@@ -566,10 +617,22 @@ def main():
             elif choice == 5:
                 clock_freq_calculator()
                 
+            elif choice == 6:
+                print("Sigma-Delta Tools")
+                print("1. Sigma-Delta SNR")
+                print("2. Sigma-Delta OSR")
+                sd_choice = int(input("Enter your choice (1-2): "))
+                if sd_choice == 1:
+                    sd_snr()
+                elif sd_choice == 2:
+                    sd_osr()
+                else:
+                    print("Invalid choice. Please try again.")
+                
             else:
                 print("Invalid option. Please try again.")
         except ValueError:
-            print("Please enter a valid option (0-5).")
+            print("Please enter a valid option (0-6).")
         
         input("\nPress Enter to return to main menu...")
         
