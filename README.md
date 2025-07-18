@@ -2,11 +2,11 @@
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.7+-blue?style=for-the-badge&logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-Educational%20Open-green?style=for-the-badge)
-![Version](https://img.shields.io/badge/Version-v3.0.0-orange?style=for-the-badge)
-![Last Update](https://img.shields.io/badge/Last%20Update-2025--07--18-brightgreen?style=for-the-badge)
-![Contributors](https://img.shields.io/badge/Contributors-3-purple?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.7+-blue?style=flat-square&logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-Educational%20Open-green?style=flat-square)
+![Version](https://img.shields.io/badge/Version-v3.0.0-orange?style=flat-square)
+![Last Update](https://img.shields.io/badge/Last%20Update-2025--07--18-brightgreen?style=flat-square)
+![Contributors](https://img.shields.io/badge/Contributors-3-purple?style=flat-square)
 
 </div>
 
