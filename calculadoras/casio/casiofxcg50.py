@@ -5,17 +5,17 @@
 
 from math import log, log10, log2, pi, ceil, floor
 
+# Constants
+SNR_FORMULA_SLOPE = 6.02  # dB per bit
+SNR_FORMULA_OFFSET = 1.76  # dB offset
+SQRT_2 = 2**0.5
+SQRT_12 = 12**0.5
+
 def bin2dec(b):
     """Convert binary string to decimal"""
     return int(b, 2)
 
-def calc_vlsbr(vmin, vmax, n):
-    """Calculate VlsbReal"""
-    try:
-        return (vmax - vmin)/(2**n - 1)
-    except:
-        return 0
-    
+
 def bin_to_val(bin_str, vref, bits):
     n = int(bin_str, 2)
     max_n = 2**bits - 1
@@ -35,47 +35,10 @@ def val_to_bin(val, vref, bits):
         
     return result
 
-def calc_inl(vout, dec, vlsbr, vmin):
-    """Calculate INL"""
-    try:
-        inl = (vout - dec*vlsbr - vmin)/vlsbr
-        return inl, True
-    except:
-        return 0, False
 
-def calc_dnl(vout, prev, vlsbr):
-    """Calculate DNL"""
-    try:
-        dnl = (vout - prev)/vlsbr - 1
-        return dnl, True
-    except:
-        return 0, False
 
-def calc_linear(n, inl_vals):
-    """Calculate linearity"""
-    try:
-        nums = []
-        for inl in inl_vals:
-            try:
-                if inl != "Error" and inl != "N/A":
-                    nums.append(float(inl))
-            except:
-                continue
-        
-        if len(nums) == 0:
-            return "N/A"
-            
-        inl_max = max(nums)
-        inl_min = min(nums)
-        inl_range = inl_max - inl_min
-        
-        if inl_range <= 0:
-            return "N/A"
-            
-        lin = n - (log10(inl_range) / log10(2))
-        return round(lin, 3)
-    except:
-        return "N/A"
+
+
 
 def calculate_vlsbr(vout_min, vout_max, num_bits):
     try:
@@ -88,6 +51,48 @@ def calculate_vlsbi(vref, num_bits):
         return vref/(2**num_bits)
     except:
         return 0    
+
+def calculate_inl(vout, decimal_value, vlsbr, vout_min):
+    """Calculate INL using formula: INL = (Vout - n*VlsbR - Vout_min)/VlsbR"""
+    try:
+        inl = (vout - decimal_value*vlsbr - vout_min)/vlsbr 
+        return inl, True
+    except:
+        return 0, False
+
+def calculate_dnl(vout, prev_vout, vlsbr):
+    """Calculate DNL using formula: DNL = (Vout(n) - Vout(n-1))/VlsbR - 1"""
+    try:
+        dnl = (vout - prev_vout)/vlsbr - 1
+        return dnl, True
+    except:
+        return 0, False
+
+def calculate_linearity(num_bits, inl_values):
+    """Calculate linearity using formula: nbits-log_2(INLmax-INLmin)"""
+    try:
+        numeric_inl = []
+        for inl in inl_values:
+            try:
+                if inl != "ERROR" and inl != "N/A":
+                    numeric_inl.append(float(inl))
+            except:
+                continue
+        
+        if len(numeric_inl) == 0:
+            return "N/A"
+            
+        inl_max = max(numeric_inl)
+        inl_min = min(numeric_inl)
+        inl_range = inl_max - inl_min
+        
+        if inl_range <= 0:
+            return "N/A"
+            
+        linearity = num_bits - (log10(inl_range) / log10(2))
+        return round(linearity, 3)
+    except:
+        return "N/A"
 
 def inl_dnl_calc():
     """INL/DNL Table Calculator"""
@@ -110,7 +115,7 @@ def inl_dnl_calc():
         vmax = float(input("Vout_max: "))
         
         # Calculate VlsbReal
-        vlsbr = calc_vlsbr(vmin, vmax, n)
+        vlsbr = calculate_vlsbr(vmin, vmax, n)
         print("VlsbReal = "+str(round(vlsbr,6)))
     except:
         print("Error in calculation.")
@@ -175,7 +180,7 @@ def inl_dnl_calc():
     # Calculate all INL values
     for i in range(num_ent):
         dec = bin2dec(bits[i])
-        inl, ok = calc_inl(vouts[i], dec, vlsbr, vmin)
+        inl, ok = calculate_inl(vouts[i], dec, vlsbr, vmin)
         if ok:
             inl_list.append(str(round(inl, 6)))
         else:
@@ -188,7 +193,7 @@ def inl_dnl_calc():
         
         # Check consecutive codes
         if d_curr == d_prev + 1:
-            dnl, ok = calc_dnl(vouts[i], vouts[i-1], vlsbr)
+            dnl, ok = calculate_dnl(vouts[i], vouts[i-1], vlsbr)
             if ok:
                 dnl_list.append(str(round(dnl, 6)))
             else:
@@ -205,7 +210,7 @@ def inl_dnl_calc():
         print(row)
     
     # Calculate linearity
-    lin = calc_linear(n, inl_list)
+    lin = calculate_linearity(n, inl_list)
     print("Linearity = " + str(lin) + " bits")
     print("Formula: n-log2(INLmax-INLmin)")
 
@@ -221,13 +226,13 @@ def snr_max_calc():
     if ch == 2:
         # Calculate SNR max
         snr = float(input("SNR max (dB): "))
-        n = (snr - 1.76) / 6.02
-        print("Number of bits = " + str(ceil(n)))
+        n = (snr - SNR_FORMULA_OFFSET) / SNR_FORMULA_SLOPE
+        print(f"Number of bits = {ceil(n)}")
     elif ch == 1:
         # Calculate bits
         n = int(input("Number of bits: "))
-        snr = 6.02 * n + 1.76
-        print("SNR max = " + str(snr) + " dB")
+        snr = SNR_FORMULA_SLOPE * n + SNR_FORMULA_OFFSET
+        print(f"SNR max = {snr} dB")
     else:
         print("Invalid option!")
     
@@ -251,8 +256,8 @@ def snr_calc():
     djit_sec = djit * 1e-12
     
     # Calculate RMS input
-    vinrms = vin / (2**0.5)
-    print("Vin RMS = " + str(round(vinrms, 4)) + " V")
+    vinrms = vin / SQRT_2
+    print(f"Vin RMS = {round(vinrms, 4)} V")
     
     # Check if jitter should be considered
     use_jit = (djit_sec != 0) and (fin_hz != 0)
@@ -482,7 +487,7 @@ def pipeline_snr():
     
     penalizacao = 20 * log10(amplitude_sinal / (vref / 2))
     snr_ideal_necessaria = snr_target - penalizacao
-    N = ceil((snr_ideal_necessaria - 1.76) / 6.02)
+    N = ceil((snr_ideal_necessaria - SNR_FORMULA_OFFSET) / SNR_FORMULA_SLOPE)
     
     bits_primeiro = bits_por_estagio
     bits_restantes = N - bits_primeiro
@@ -523,7 +528,7 @@ def sd_snr():
         ganho = 70
         correcao = -20.9
 
-    snr = 6.02 * n + 1.76 + ganho * log10(osr) + correcao + 20 * log10(Vin)
+    snr = SNR_FORMULA_SLOPE * n + SNR_FORMULA_OFFSET + ganho * log10(osr) + correcao + 20 * log10(Vin)
     print("SNR calculado: {:.2f} dB".format(snr))
     
 def sd_osr():
@@ -548,7 +553,7 @@ def sd_osr():
         ganho = 70
         correcao = -20.9
 
-    osr = 10 ** ((snr - 1.76 - 6.02 * n - correcao - 20 * log10(Vin)) / ganho)
+    osr = 10 ** ((snr - SNR_FORMULA_OFFSET - SNR_FORMULA_SLOPE * n - correcao - 20 * log10(Vin)) / ganho)
     print("OSR necessário: {:.3f}".format(osr))
 
 def main():

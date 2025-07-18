@@ -5,6 +5,12 @@
 
 from math import log, log10, log2, pi, ceil, floor
 
+# Constants
+SNR_FORMULA_SLOPE = 6.02  # dB per bit
+SNR_FORMULA_OFFSET = 1.76  # dB offset
+SQRT_2 = 2**0.5
+SQRT_12 = 12**0.5
+
 def bin2dec(binary_bits):
     """Convert binary string to decimal"""
     return int(binary_bits, 2)
@@ -196,13 +202,13 @@ def snr_max_calculator():
     
     if choice == 2:
         snr_max = float(input("SNR max (dB): "))
-        num_bits = (snr_max - 1.76) / 6.02
-        print("\nNumber of bits = " + str(ceil(num_bits)))
+        num_bits = (snr_max - SNR_FORMULA_OFFSET) / SNR_FORMULA_SLOPE
+        print(f"\nNumber of bits = {ceil(num_bits)}")
         print("Obrigado pela ajuda Nobrega!")
     elif choice == 1:
         num_bits = int(input("Number of bits: "))
-        snr_max = 6.02 * num_bits + 1.76
-        print("\nSNR max = " + str(snr_max) + " dB")
+        snr_max = SNR_FORMULA_SLOPE * num_bits + SNR_FORMULA_OFFSET
+        print(f"\nSNR max = {snr_max} dB")
         print("Obrigado pela ajuda Nobrega!")
     else:
         print("Opção inválida!")
@@ -227,8 +233,8 @@ def snr_calculator():
 
     djit_sec = djit * 1e-12
     
-    vinrms = vin / (2**0.5)
-    print("\nVin RMS = " + str(round(vinrms, 4)) + " V")
+    vinrms = vin / SQRT_2
+    print(f"\nVin RMS = {round(vinrms, 4)} V")
     
     consider_jitter = (djit_sec != 0) and (fin_hz != 0)
     
@@ -441,7 +447,7 @@ def pipeline_snr():
     
     penalizacao = 20 * log10(amplitude_sinal / (vref / 2))
     snr_ideal_necessaria = snr_target - penalizacao
-    N = ceil((snr_ideal_necessaria - 1.76) / 6.02)
+    N = ceil((snr_ideal_necessaria - SNR_FORMULA_OFFSET) / SNR_FORMULA_SLOPE)
     
     bits_primeiro = bits_por_estagio
     bits_restantes = N - bits_primeiro
@@ -482,7 +488,7 @@ def sd_snr():
         ganho = 70
         correcao = -20.9
 
-    snr = 6.02 * n + 1.76 + ganho * log10(osr) + correcao + 20 * log10(Vin)
+    snr = SNR_FORMULA_SLOPE * n + SNR_FORMULA_OFFSET + ganho * log10(osr) + correcao + 20 * log10(Vin)
     print("SNR calculado: {:.2f} dB".format(snr))
     
 def sd_osr():
@@ -507,7 +513,7 @@ def sd_osr():
         ganho = 70
         correcao = -20.9
 
-    osr = 10 ** ((snr - 1.76 - 6.02 * n - correcao - 20 * log10(Vin)) / ganho)
+    osr = 10 ** ((snr - SNR_FORMULA_OFFSET - SNR_FORMULA_SLOPE * n - correcao - 20 * log10(Vin)) / ganho)
     print("OSR necessário: {:.3f}".format(osr))
 
 def main():

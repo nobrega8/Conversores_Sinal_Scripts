@@ -328,19 +328,19 @@ def snr_calculator():
         # Cálculo original - resolver para SNR
         n = int(input("Enter number of bits (n): "))
         vlsb = vref / (2**n)
-        print("\nVlsb = " + str(round(vlsb, 4)) + " V")
+        print(f"\nVlsb = {round(vlsb, 4)} V")
         vnqrms = vlsb / SQRT_12
         print(f"VNQ RMS = {round(vnqrms, 4)} V")
         
         if consider_jitter:
             vjitterns = vinrms * 2 * pi * fin_hz * djit_sec
-            print("VJitter RMS = " + str(round(vjitterns, 4)) + " V")
+            print(f"VJitter RMS = {round(vjitterns, 4)} V")
             snr = 10 * log10(vinrms**2 / (vnqrms**2 + vjitterns**2))
-            print("\nSNR = " + str(round(snr, 2)) + " dB (considering both quantization and jitter noise)")
+            print(f"\nSNR = {round(snr, 2)} dB (considering both quantization and jitter noise)")
         else:
             # Considera apenas ruído de quantização se jitter ou frequência for zero
             snr = 10 * log10(vinrms**2 / vnqrms**2)
-            print("\nSNR = " + str(round(snr, 2)) + " dB (considering only quantization noise)")
+            print(f"\nSNR = {round(snr, 2)} dB (considering only quantization noise)")
         
     elif choice == 2:
         # Novo cálculo - resolver para n (número de bits)
@@ -352,26 +352,26 @@ def snr_calculator():
         if consider_jitter:
             # Calcula ruído de jitter
             vjitterns = vinrms * 2 * pi * fin_hz * djit_sec
-            print("VJitter RMS = " + str(round(vjitterns, 4)) + " V")
+            print(f"VJitter RMS = {round(vjitterns, 4)} V")
             
             # Se o ruído de jitter for muito alto, SNR pode ser impossível de atingir
             jitter_limited_snr = 10 * log10(vinrms**2 / vjitterns**2)
-            print("Jitter limited SNR = " + str(round(jitter_limited_snr, 2)) + " dB")
+            print(f"Jitter limited SNR = {round(jitter_limited_snr, 2)} dB")
             if jitter_limited_snr < snr:
-                print("\nWarning: The requested SNR of " + str(round(snr, 2)) + " dB cannot be achieved due to jitter limitations.")
-                print("Maximum possible SNR with given jitter is " + str(round(jitter_limited_snr, 2)) + " dB")
+                print(f"\nWarning: The requested SNR of {round(snr, 2)} dB cannot be achieved due to jitter limitations.")
+                print(f"Maximum possible SNR with given jitter is {round(jitter_limited_snr, 2)} dB")
                 return
             
             # Calcula máximo ruído de quantização permitido para alcançar SNR desejado
             vnqrms_max = (vinrms**2 / snr_linear - vjitterns**2)**0.5
-            print("Maximum VNQ RMS = " + str(round(vnqrms_max, 4)) + " V")
+            print(f"Maximum VNQ RMS = {round(vnqrms_max, 4)} V")
         else:
             # Se não houver jitter a considerar, o cálculo é mais simples
             vnqrms_max = vinrms / (snr_linear**0.5)
-            print("Maximum VNQ RMS = " + str(round(vnqrms_max, 4)) + " V")
+            print(f"Maximum VNQ RMS = {round(vnqrms_max, 4)} V")
         
         # Calcula valor LSB necessário
-        vlsb_required = vnqrms_max * (12**0.5)
+        vlsb_required = vnqrms_max * SQRT_12
         
         # Calcula número de bits necessário
         n_calculated = log(vref / vlsb_required) / log(2)
@@ -379,19 +379,19 @@ def snr_calculator():
         # Arredonda para cima para o próximo inteiro, pois precisamos de pelo menos esse número de bits
         n_required = ceil(n_calculated)
         
-        print("\nRequired number of bits (n) = " + str(n_required))
-        print("(Exact calculated value: " + str(round(n_calculated, 4)) + ")")
+        print(f"\nRequired number of bits (n) = {n_required}")
+        print(f"(Exact calculated value: {round(n_calculated, 4)})")
         
         # Calcula o SNR real que será alcançado com esse número de bits
         vlsb_actual = vref / (2**n_required)
-        vnqrms_actual = vlsb_actual / (12**0.5)
+        vnqrms_actual = vlsb_actual / SQRT_12
         
         if consider_jitter:
             snr_actual = 10 * log10(vinrms**2 / (vnqrms_actual**2 + vjitterns**2))
-            print("With " + str(n_required) + " bits, the actual SNR will be " + str(round(snr_actual, 2)) + " dB (considering both quantization and jitter noise)")
+            print(f"With {n_required} bits, the actual SNR will be {round(snr_actual, 2)} dB (considering both quantization and jitter noise)")
         else:
             snr_actual = 10 * log10(vinrms**2 / vnqrms_actual**2)
-            print("With " + str(n_required) + " bits, the actual SNR will be " + str(round(snr_actual, 2)) + " dB (considering only quantization noise)")
+            print(f"With {n_required} bits, the actual SNR will be {round(snr_actual, 2)} dB (considering only quantization noise)")
     
     else:
         print("Invalid choice. Please run the program again.")
@@ -452,19 +452,13 @@ def dount_step_graph():
     plt.show()
     
 def clock_freq_calculator():
-    """Calculadora da frquência de clock
-    
-    Args:
-        None
-        
-    Returns:
-        None
-    """
+    """Calculator for clock frequency"""
     print("\nClock Frequency Calculator")
     print("===========================")
     print("1 - Solve for n bits")
     print("2 - Solve for f")
     choice = int(input("Enter your choice (1 or 2): "))
+    
     if choice == 1:
         # Resolve para n bits
         f = float(input("Enter f (MHz): "))
@@ -508,13 +502,13 @@ def calculate_vlsb():
         num_bits = int(input("Enter number of bits (n): "))
         vref = float(input("Enter Vref value (V): "))
         vlsb_ideal = calculate_vlsbi(vref, num_bits)
-        print("\nCalculated Ideal Vlsb = " + str(round(vlsb_ideal, 3)))
+        print(f"\nCalculated Ideal Vlsb = {round(vlsb_ideal, 3)}")
     elif choice == 2:
         vout_min = float(input("Enter Vout_min value: "))
         vout_max = float(input("Enter Vout_max value: "))
         num_bits = int(input("Enter number of bits (n): "))
         vlsb_real = calculate_vlsbr(vout_min, vout_max, num_bits)
-        print("\nCalculated Real Vlsb = " + str(round(vlsb_real, 3)))
+        print(f"\nCalculated Real Vlsb = {round(vlsb_real, 3)}")
     else:
         print("Invalid choice. Please run the program again.")
         
@@ -580,7 +574,7 @@ def pipeline_snr():
     snr_ideal_necessaria = snr_target - penalizacao
 
     # Cálculo da resolução mínima N
-    N = ceil((snr_ideal_necessaria - 1.76) / 6.02)
+    N = ceil((snr_ideal_necessaria - SNR_FORMULA_OFFSET) / SNR_FORMULA_SLOPE)
 
     # Estágios necessários:
     # - O primeiro estágio fornece todos os bits (sem redundância)
@@ -619,7 +613,7 @@ def sd_snr():
     gains = {1: 30, 2: 50, 3: 70}
     corrections = {1: -5.17, 2: -12.9, 3: -20.9}
 
-    snr = 6.02 * n + 1.76 + gains[order] * log10(osr) + corrections[order] + 20 * log10(Vin)
+    snr = SNR_FORMULA_SLOPE * n + SNR_FORMULA_OFFSET + gains[order] * log10(osr) + corrections[order] + 20 * log10(Vin)
     print(f"\nSNR calculado: {snr:.2f} dB")
 
 def sd_osr():
@@ -637,7 +631,7 @@ def sd_osr():
     gains = {1: 30, 2: 50, 3: 70}
     corrections = {1: -5.17, 2: -12.9, 3: -20.9}
 
-    osr = 10**((snr - 1.76 - 6.02 * n - corrections[order] - 20 * log10(Vin)) / gains[order])
+    osr = 10**((snr - SNR_FORMULA_OFFSET - SNR_FORMULA_SLOPE * n - corrections[order] - 20 * log10(Vin)) / gains[order])
     print(f"\nOSR necessário para atingir SNR de {snr} dB: {osr:.3f}")
     
     
