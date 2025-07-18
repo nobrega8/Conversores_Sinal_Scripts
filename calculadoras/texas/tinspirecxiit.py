@@ -3,9 +3,16 @@
 ## 2025 (c) Afonso Nóbrega
 ## v3.0.0
 
-from math import *
+from math import log, log10, log2, pi, ceil, floor
 
-def binary_to_decimal(binary_bits):
+# Constants
+SNR_FORMULA_SLOPE = 6.02  # dB per bit
+SNR_FORMULA_OFFSET = 1.76  # dB offset
+SQRT_2 = 2**0.5
+SQRT_12 = 12**0.5
+
+def bin2dec(binary_bits):
+    """Convert binary string to decimal"""
     return int(binary_bits, 2)
 
 def bin_to_val(bin_str, vref, bits):
@@ -58,7 +65,7 @@ def calculate_linearity(num_bits, inl_values):
         numeric_inl = []
         for inl in inl_values:
             try:
-                if inl != "Drena n Bazofa" and inl != "nepia":
+                if inl != "ERROR" and inl != "N/A":
                     numeric_inl.append(float(inl))
             except:
                 continue
@@ -148,31 +155,31 @@ def inl_dnl_calculator():
     print("-------------------------------")
     
     inl_list = []
-    dnl_list = ["nepia"]  
+    dnl_list = ["N/A"]  # First DNL is always N/A
 
     for i in range(num_entries):
-        decimal_value = binary_to_decimal(bits_list[i])
+        decimal_value = bin2dec(bits_list[i])
         inl, success = calculate_inl(vout_list[i], decimal_value, vlsbr, vout_min)
         if success:
             inl_list.append(str(round(inl, 6)))
         else:
-            inl_list.append("Drena n Bazofa")
+            inl_list.append("ERROR")
 
     for i in range(1, num_entries):
-        decimal_prev = binary_to_decimal(bits_list[i-1])
-        decimal_curr = binary_to_decimal(bits_list[i])
+        decimal_prev = bin2dec(bits_list[i-1])
+        decimal_curr = bin2dec(bits_list[i])
         
         if decimal_curr == decimal_prev + 1:
             dnl, success = calculate_dnl(vout_list[i], vout_list[i-1], vlsbr)
             if success:
                 dnl_list.append(str(round(dnl, 6)))
             else:
-                dnl_list.append("Drena n Bazofa")
+                dnl_list.append("ERROR")
         else:
-            dnl_list.append("nepia")
+            dnl_list.append("N/A")
     
     for i in range(num_entries):
-        decimal_value = binary_to_decimal(bits_list[i])
+        decimal_value = bin2dec(bits_list[i])
         row = str(i+1) + " " + bits_list[i] + " " + str(decimal_value)
         row += " " + str(round(vout_list[i], 3))
         row += " " + inl_list[i] + " " + dnl_list[i]
@@ -195,13 +202,13 @@ def snr_max_calculator():
     
     if choice == 2:
         snr_max = float(input("SNR max (dB): "))
-        num_bits = (snr_max - 1.76) / 6.02
-        print("\nNumber of bits = " + str(ceil(num_bits)))
+        num_bits = (snr_max - SNR_FORMULA_OFFSET) / SNR_FORMULA_SLOPE
+        print(f"\nNumber of bits = {ceil(num_bits)}")
         print("Obrigado pela ajuda Nobrega!")
     elif choice == 1:
         num_bits = int(input("Number of bits: "))
-        snr_max = 6.02 * num_bits + 1.76
-        print("\nSNR max = " + str(snr_max) + " dB")
+        snr_max = SNR_FORMULA_SLOPE * num_bits + SNR_FORMULA_OFFSET
+        print(f"\nSNR max = {snr_max} dB")
         print("Obrigado pela ajuda Nobrega!")
     else:
         print("Opção inválida!")
@@ -226,8 +233,8 @@ def snr_calculator():
 
     djit_sec = djit * 1e-12
     
-    vinrms = vin / (2**0.5)
-    print("\nVin RMS = " + str(round(vinrms, 4)) + " V")
+    vinrms = vin / SQRT_2
+    print(f"\nVin RMS = {round(vinrms, 4)} V")
     
     consider_jitter = (djit_sec != 0) and (fin_hz != 0)
     
@@ -440,7 +447,7 @@ def pipeline_snr():
     
     penalizacao = 20 * log10(amplitude_sinal / (vref / 2))
     snr_ideal_necessaria = snr_target - penalizacao
-    N = ceil((snr_ideal_necessaria - 1.76) / 6.02)
+    N = ceil((snr_ideal_necessaria - SNR_FORMULA_OFFSET) / SNR_FORMULA_SLOPE)
     
     bits_primeiro = bits_por_estagio
     bits_restantes = N - bits_primeiro
@@ -481,7 +488,7 @@ def sd_snr():
         ganho = 70
         correcao = -20.9
 
-    snr = 6.02 * n + 1.76 + ganho * log10(osr) + correcao + 20 * log10(Vin)
+    snr = SNR_FORMULA_SLOPE * n + SNR_FORMULA_OFFSET + ganho * log10(osr) + correcao + 20 * log10(Vin)
     print("SNR calculado: {:.2f} dB".format(snr))
     
 def sd_osr():
@@ -506,7 +513,7 @@ def sd_osr():
         ganho = 70
         correcao = -20.9
 
-    osr = 10 ** ((snr - 1.76 - 6.02 * n - correcao - 20 * log10(Vin)) / ganho)
+    osr = 10 ** ((snr - SNR_FORMULA_OFFSET - SNR_FORMULA_SLOPE * n - correcao - 20 * log10(Vin)) / ganho)
     print("OSR necessário: {:.3f}".format(osr))
 
 def main():
@@ -594,4 +601,5 @@ def main():
         
         input("\nPress Enter to return to main menu...")
 
-main()
+if __name__ == "__main__":
+    main()
