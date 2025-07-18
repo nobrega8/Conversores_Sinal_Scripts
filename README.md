@@ -5,7 +5,6 @@
 ![Python](https://img.shields.io/badge/Python-3.7+-blue?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-Educational%20Open-green)
 ![Version](https://img.shields.io/badge/Version-v3.0.0-orange)
-![Last Update](https://img.shields.io/badge/Last%20Update-2025--07--18-brightgreen)
 ![Contributors](https://img.shields.io/badge/Contributors-3-purple)
 
 ![TI Nspire CX II-T](https://img.shields.io/badge/TI%20Nspire%20CX%20II--T-%20Complete-success)
