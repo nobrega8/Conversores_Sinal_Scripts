@@ -8,10 +8,10 @@
 ![Last Update](https://img.shields.io/badge/Last%20Update-2025--07--18-brightgreen)
 ![Contributors](https://img.shields.io/badge/Contributors-3-purple)
 
-![TI Nspire CX II-T](https://img.shields.io/badge/TI%20Nspire%20CX%20II--T-✅%20Complete-success)
-![TI Nspire CX](https://img.shields.io/badge/TI%20Nspire%20CX-⚠️%20Limited-yellow)
-![Casio FX-CG50](https://img.shields.io/badge/Casio%20FX--CG50-✅%20Complete-success)
-![Python Source](https://img.shields.io/badge/Python%20Source-✅%20Complete-success)
+![TI Nspire CX II-T](https://img.shields.io/badge/TI%20Nspire%20CX%20II--T-%20Complete-success)
+![TI Nspire CX](https://img.shields.io/badge/TI%20Nspire%20CX-%20Limited-yellow)
+![Casio FX-CG50](https://img.shields.io/badge/Casio%20FX--CG50-%20Complete-success)
+
 
 </div>
 
