@@ -2,11 +2,16 @@
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.7+-blue?style=flat-square&logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-Educational%20Open-green?style=flat-square)
-![Version](https://img.shields.io/badge/Version-v3.0.0-orange?style=flat-square)
-![Last Update](https://img.shields.io/badge/Last%20Update-2025--07--18-brightgreen?style=flat-square)
-![Contributors](https://img.shields.io/badge/Contributors-3-purple?style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.7+-blue?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-Educational%20Open-green)
+![Version](https://img.shields.io/badge/Version-v3.0.0-orange)
+![Last Update](https://img.shields.io/badge/Last%20Update-2025--07--18-brightgreen)
+![Contributors](https://img.shields.io/badge/Contributors-3-purple)
+
+![TI Nspire CX II-T](https://img.shields.io/badge/TI%20Nspire%20CX%20II--T-✅%20Complete-success)
+![TI Nspire CX](https://img.shields.io/badge/TI%20Nspire%20CX-⚠️%20Limited-yellow)
+![Casio FX-CG50](https://img.shields.io/badge/Casio%20FX--CG50-✅%20Complete-success)
+![Python Source](https://img.shields.io/badge/Python%20Source-✅%20Complete-success)
 
 </div>
 
@@ -268,6 +273,6 @@ Para mais detalhes, consulte o ficheiro [LICENSE](LICENSE).
 
 ---
 
-**Copyright © 2025 | FCT Nova - Faculdade de Ciências e Tecnologia**
+**Copyright © 2025 | Afonso Nóbrega**
 
 </div>
