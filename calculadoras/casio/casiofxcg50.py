@@ -3,7 +3,7 @@
 ## 2025 (c) Afonso Nóbrega
 ## v3.0.0
 
-from math import *
+from math import log, log10, log2, pi, ceil, floor
 
 def bin2dec(b):
     """Convert binary string to decimal"""
@@ -635,5 +635,6 @@ def main():
             print("Please enter a valid option (0-6).")
         
         input("\nPress Enter to return to main menu...")
-        
-main()
+
+if __name__ == "__main__":
+    main()

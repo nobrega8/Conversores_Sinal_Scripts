@@ -3,9 +3,10 @@
 ## 2025 (c) Afonso Nóbrega
 ## v3.0.0
 
-from math import *
+from math import log, log10, log2, pi, ceil, floor
 
-def binary_to_decimal(binary_bits):
+def bin2dec(binary_bits):
+    """Convert binary string to decimal"""
     return int(binary_bits, 2)
 
 def bin_to_val(bin_str, vref, bits):
@@ -58,7 +59,7 @@ def calculate_linearity(num_bits, inl_values):
         numeric_inl = []
         for inl in inl_values:
             try:
-                if inl != "Drena n Bazofa" and inl != "nepia":
+                if inl != "ERROR" and inl != "N/A":
                     numeric_inl.append(float(inl))
             except:
                 continue
@@ -148,31 +149,31 @@ def inl_dnl_calculator():
     print("-------------------------------")
     
     inl_list = []
-    dnl_list = ["nepia"]  
+    dnl_list = ["N/A"]  # First DNL is always N/A
 
     for i in range(num_entries):
-        decimal_value = binary_to_decimal(bits_list[i])
+        decimal_value = bin2dec(bits_list[i])
         inl, success = calculate_inl(vout_list[i], decimal_value, vlsbr, vout_min)
         if success:
             inl_list.append(str(round(inl, 6)))
         else:
-            inl_list.append("Drena n Bazofa")
+            inl_list.append("ERROR")
 
     for i in range(1, num_entries):
-        decimal_prev = binary_to_decimal(bits_list[i-1])
-        decimal_curr = binary_to_decimal(bits_list[i])
+        decimal_prev = bin2dec(bits_list[i-1])
+        decimal_curr = bin2dec(bits_list[i])
         
         if decimal_curr == decimal_prev + 1:
             dnl, success = calculate_dnl(vout_list[i], vout_list[i-1], vlsbr)
             if success:
                 dnl_list.append(str(round(dnl, 6)))
             else:
-                dnl_list.append("Drena n Bazofa")
+                dnl_list.append("ERROR")
         else:
-            dnl_list.append("nepia")
+            dnl_list.append("N/A")
     
     for i in range(num_entries):
-        decimal_value = binary_to_decimal(bits_list[i])
+        decimal_value = bin2dec(bits_list[i])
         row = str(i+1) + " " + bits_list[i] + " " + str(decimal_value)
         row += " " + str(round(vout_list[i], 3))
         row += " " + inl_list[i] + " " + dnl_list[i]
@@ -594,4 +595,5 @@ def main():
         
         input("\nPress Enter to return to main menu...")
 
-main()
+if __name__ == "__main__":
+    main()
