@@ -45,7 +45,7 @@ def _input_float(prompt, default=None):
         if raw == "" and default is not None:
             return float(default)
         return float(raw)
-    except:
+    except (ValueError, TypeError):
         if default is not None:
             return float(default)
         raise
