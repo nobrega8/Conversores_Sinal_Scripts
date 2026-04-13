@@ -587,4 +587,5 @@ def main():
         input("\nEnter to continue...")
 
 
-main()
+if __name__ == "__main__":
+    main()
