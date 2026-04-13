@@ -184,11 +184,11 @@ Contribuições são bem-vindas. Consulte o ficheiro [CONTRIBUTING.md](CONTRIBUT
 
 Este projeto está licenciado sob a **Educational Open License** (baseada na MIT License).
 
-- Uso educativo: permitido sem restrições
-- Modificação: permitida para fins educativos
-- Distribuição: permitida para fins não-comerciais
+- Uso: permitido apenas para fins educativos e não-comerciais, sujeito às condições da licença
+- Modificação: permitida apenas para fins educativos e não-comerciais, mantendo os avisos e termos aplicáveis
+- Distribuição: permitida apenas para fins educativos e não-comerciais, com inclusão do aviso de licença e atribuição ao autor original
 - Uso comercial: requer autorização explícita
-- Atribuição: obrigatória ao autor original
+- Atribuição e aviso: é obrigatório dar crédito ao autor original e preservar/incluir o aviso de licença aplicável
 
 Consulte o ficheiro [LICENSE](LICENSE) para mais detalhes.
 
