@@ -203,12 +203,12 @@ def snr_max_calculator():
     if choice == 2:
         snr_max = float(input("SNR max (dB): "))
         num_bits = (snr_max - SNR_FORMULA_OFFSET) / SNR_FORMULA_SLOPE
-        print(f"\nNumber of bits = {ceil(num_bits)}")
+        print("\nNumber of bits = " + str(ceil(num_bits)))
         print("Obrigado pela ajuda Nobrega!")
     elif choice == 1:
         num_bits = int(input("Number of bits: "))
         snr_max = SNR_FORMULA_SLOPE * num_bits + SNR_FORMULA_OFFSET
-        print(f"\nSNR max = {snr_max} dB")
+        print("\nSNR max = " + str(snr_max) + " dB")
         print("Obrigado pela ajuda Nobrega!")
     else:
         print("Opção inválida!")
@@ -234,7 +234,7 @@ def snr_calculator():
     djit_sec = djit * 1e-12
     
     vinrms = vin / SQRT_2
-    print(f"\nVin RMS = {round(vinrms, 4)} V")
+    print("\nVin RMS = " + str(round(vinrms, 4)) + " V")
     
     consider_jitter = (djit_sec != 0) and (fin_hz != 0)
     
