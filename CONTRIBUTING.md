@@ -1,21 +1,18 @@
-# 🤝 Contribuir para o Projeto
+# Contribuir para o Projeto
 
-Obrigado por considerares contribuir para a Calculadora de Conversores de Sinal da FCT Nova! 🎓  
-Este projeto foi criado com o objetivo de apoiar a comunidade académica e pode ser facilmente expandido para suportar mais modelos de calculadora.
+Contribuições para a Calculadora de Conversores de Sinal da FCT Nova são bem-vindas. O projeto foi criado para apoiar a comunidade académica e pode ser expandido para suportar mais modelos de calculadora.
 
-## 🧩 Como Contribuir
+## Como Contribuir
 
-### 1. Adapta o Código Base
+### 1. Adaptar o Código Base
 
-O ficheiro [`source.py`](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/source.py), localizado na raiz do repositório, contém a implementação genérica das funcionalidades da calculadora.
+O ficheiro [`source.py`](https://github.com/nobrega8/Conversores_Sinal_Scripts/blob/main/source.py), na raiz do repositório, contém a implementação genérica das funcionalidades. Use-o como base para adaptar o código a um novo modelo, ajustando input/output, limitando funcionalidades ou modificando a interface consoante as restrições do dispositivo.
 
-Podes usá-lo como base para adaptar o código a um novo modelo de calculadora. Por exemplo, ajustar a forma de input/output, limitar funcionalidades ou modificar a interface consoante as restrições do dispositivo.
+### 2. Criar o Script Adaptado
 
-### 2. Cria o Script Adaptado
+Crie um novo ficheiro Python na pasta correspondente ao fabricante e modelo:
 
-Depois de adaptares o `source.py`, deves criar um novo ficheiro Python na pasta correspondente ao fabricante e modelo da calculadora:
-
-```ts
+```
 calculadoras/
 │
 ├── texas/
@@ -25,37 +22,33 @@ calculadoras/
 │   ├── casiofxcg50.py    ← Exemplo: Casio FX-CG50
 ```
 
-Usa nomes descritivos e coerentes com os já existentes.
+Use nomes descritivos e coerentes com os já existentes.
 
-### 3. Testa o Script
+### 3. Testar o Script
 
-Garante que:
+Certifique-se de que:
 
 - Todas as funcionalidades relevantes funcionam corretamente no modelo escolhido.
-- Estão descritas eventuais limitações específicas no cabeçalho do ficheiro.
+- Eventuais limitações específicas estão descritas no cabeçalho do ficheiro.
 - O script segue o estilo do repositório.
 
-### 4. Atualiza a Tabela no README
+### 4. Atualizar a Tabela no README
 
-Se adicionares suporte para uma nova calculadora, não te esqueças de atualizar a tabela principal no `README.md`, indicando:
+Se adicionar suporte para uma nova calculadora, atualize a tabela no `README.md` com:
 
 - Nome do modelo
-- Estado de compatibilidade (✅ / ⚠️ / ❌)
+- Estado de compatibilidade
 - Problemas conhecidos
 - Versão mais recente
 
-### 5. Submete o Pull Request
+### 5. Submeter o Pull Request
 
-- Cria um *fork* do repositório.
-- Faz as alterações no teu *fork*.
-- Cria um *pull request* com uma breve descrição do modelo e das alterações feitas.
-
----
-
-## 📬 Contacto
-
-Se tiveres dúvidas, sugestões ou ideias para funcionalidades novas, podes abrir um *issue* ou contactar diretamente os desenvolvedores.
+- Faça fork do repositório.
+- Aplique as alterações no seu fork.
+- Abra um pull request com uma breve descrição do modelo e das alterações feitas.
 
 ---
 
-**Ganda drena** 🙌  
+## Contacto
+
+Para dúvidas, sugestões ou novas funcionalidades, abra um *issue* ou contacte diretamente os desenvolvedores.
