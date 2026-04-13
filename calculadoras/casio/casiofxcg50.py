@@ -52,12 +52,12 @@ def _input_float(prompt, default=None):
 
 def _input_int(prompt, default=None):
     """input() wrapper that returns an int; uses default on empty/error."""
+    raw = input(prompt)
     try:
-        raw = input(prompt)
         if raw == "" and default is not None:
             return int(default)
         return int(raw)
-    except:
+    except (ValueError, TypeError):
         if default is not None:
             return int(default)
         raise
